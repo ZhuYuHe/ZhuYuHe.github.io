@@ -103,28 +103,28 @@
   <meta name="keywords" content="ML," />
 
 
-<meta name="description" content="转载请注明出处：https://zhuyuhe.github.io/2018/01/21/%E6%B5%85%E8%B0%88%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/  博主即将开始求职之旅，于是搭了这个博客，将备战春招和秋招的复习笔记记录于此。此系列是对机器学习算法理论的复习，力求搞懂算法的来龙去脉，公式繁多，废话较少。以">
+<meta name="description" content="最近实验室配了一台深度学习服务器，服务器刚到时基本上只装了 ubuntu 操作系统，所以我也基本上是算从头配置了一台深度学习服务器。现将配置过程记录于此，以便帮助他人和方便交流。 首先，我的深度学习服务器的配置为：  ubuntu 14.04 操作系统，16.04 应该也是一样的 Anaconda3 集成的 python 环境，使用 conda 进行虚拟环境管理 jupyterhub 提供的 j">
 <meta name="keywords" content="ML">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习算法系列（1）- 逻辑斯蒂回归">
-<meta property="og:url" content="https://zhuyuhe.github.io/2018/01/21/浅谈逻辑斯蒂回归/index.html">
+<meta property="og:title" content="深度学习服务器完整配置指南">
+<meta property="og:url" content="https://zhuyuhe.github.io/2018/05/20/服务器配置指南/index.html">
 <meta property="og:site_name" content="LITD">
-<meta property="og:description" content="转载请注明出处：https://zhuyuhe.github.io/2018/01/21/%E6%B5%85%E8%B0%88%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/  博主即将开始求职之旅，于是搭了这个博客，将备战春招和秋招的复习笔记记录于此。此系列是对机器学习算法理论的复习，力求搞懂算法的来龙去脉，公式繁多，废话较少。以">
+<meta property="og:description" content="最近实验室配了一台深度学习服务器，服务器刚到时基本上只装了 ubuntu 操作系统，所以我也基本上是算从头配置了一台深度学习服务器。现将配置过程记录于此，以便帮助他人和方便交流。 首先，我的深度学习服务器的配置为：  ubuntu 14.04 操作系统，16.04 应该也是一样的 Anaconda3 集成的 python 环境，使用 conda 进行虚拟环境管理 jupyterhub 提供的 j">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-26T13:37:59.724Z">
+<meta property="og:updated_time" content="2018-05-20T13:19:04.625Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习算法系列（1）- 逻辑斯蒂回归">
-<meta name="twitter:description" content="转载请注明出处：https://zhuyuhe.github.io/2018/01/21/%E6%B5%85%E8%B0%88%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/  博主即将开始求职之旅，于是搭了这个博客，将备战春招和秋招的复习笔记记录于此。此系列是对机器学习算法理论的复习，力求搞懂算法的来龙去脉，公式繁多，废话较少。以">
+<meta name="twitter:title" content="深度学习服务器完整配置指南">
+<meta name="twitter:description" content="最近实验室配了一台深度学习服务器，服务器刚到时基本上只装了 ubuntu 操作系统，所以我也基本上是算从头配置了一台深度学习服务器。现将配置过程记录于此，以便帮助他人和方便交流。 首先，我的深度学习服务器的配置为：  ubuntu 14.04 操作系统，16.04 应该也是一样的 Anaconda3 集成的 python 环境，使用 conda 进行虚拟环境管理 jupyterhub 提供的 j">
 
 
 
 
 
 
-  <link rel="canonical" href="https://zhuyuhe.github.io/2018/01/21/浅谈逻辑斯蒂回归/"/>
+  <link rel="canonical" href="https://zhuyuhe.github.io/2018/05/20/服务器配置指南/"/>
 
 
-  <title>机器学习算法系列（1）- 逻辑斯蒂回归 | LITD</title>
+  <title>深度学习服务器完整配置指南 | LITD</title>
   
 
 
@@ -299,7 +299,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhuyuhe.github.io/2018/01/21/浅谈逻辑斯蒂回归/">
+    <link itemprop="mainEntityOfPage" href="https://zhuyuhe.github.io/2018/05/20/服务器配置指南/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LITD">
@@ -316,7 +316,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">机器学习算法系列（1）- 逻辑斯蒂回归</h1>
+          <h1 class="post-title" itemprop="name headline">深度学习服务器完整配置指南</h1>
         
 
         <div class="post-meta">
@@ -328,7 +328,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T15:15:46+08:00">2018-01-21</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-20T14:32:39+08:00">2018-05-20</time>
             
 
             
@@ -346,9 +346,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/01/21/浅谈逻辑斯蒂回归/#comments" itemprop="discussionUrl">
+                <a href="/2018/05/20/服务器配置指南/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/01/21/浅谈逻辑斯蒂回归/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/05/20/服务器配置指南/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -356,7 +356,7 @@
 
           
           
-             <span id="/2018/01/21/浅谈逻辑斯蒂回归/" class="leancloud_visitors" data-flag-title="机器学习算法系列（1）- 逻辑斯蒂回归">
+             <span id="/2018/05/20/服务器配置指南/" class="leancloud_visitors" data-flag-title="深度学习服务器完整配置指南">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -381,7 +381,7 @@
                 
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
-                <span title="字数统计">4.7k </span>
+                <span title="字数统计">8.1k </span>
               
 
               
@@ -395,7 +395,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">0:05 </span>
+                <span title="阅读时长">0:08 </span>
               
             </div>
           
@@ -416,86 +416,124 @@
 
       
         <a id="more"></a>
-<blockquote>
-<p>转载请注明出处：<br><a href="https://zhuyuhe.github.io/2018/01/21/%E6%B5%85%E8%B0%88%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/">https://zhuyuhe.github.io/2018/01/21/%E6%B5%85%E8%B0%88%E9%80%BB%E8%BE%91%E6%96%AF%E8%92%82%E5%9B%9E%E5%BD%92/</a></p>
-</blockquote>
-<p>博主即将开始求职之旅，于是搭了这个博客，将备战春招和秋招的复习笔记记录于此。<br>此系列是对机器学习算法理论的复习，力求搞懂算法的来龙去脉，公式繁多，废话较少。<br>以后有时间会在此基础上进行完善，力求通俗易懂。<br>如有不足之处，还请各位读者指正！</p>
-<h2 id="1-从广义线性模型到sigmoid函数"><a href="#1-从广义线性模型到sigmoid函数" class="headerlink" title="1.从广义线性模型到sigmoid函数"></a>1.从广义线性模型到sigmoid函数</h2><p>首先，LR是二分类模型，我们假设二分类问题服从伯努利分布。即其概率分布为：</p>
-<script type="math/tex; mode=display">P(y;\phi)= \phi^y (1-\phi)^{1-y} = exp(ylog\phi + (1-y)log(1-\phi))=exp(ylog\frac{\phi}{1-\phi} + log(1-\phi))</script><p>而伯努利分布属于指数蔟分布，即其概率分布可以写成如下形式：</p>
-<script type="math/tex; mode=display">P(y;\eta)= b(y)exp(\eta^TT(y)-\alpha(\eta))</script><p>其中，$\eta$为自然参数。<br>广义线性模型认为输入x与自然参数$\eta$为线性关系，即$\eta = \theta^TX$。<br>对比上述两式可以得到：</p>
-<script type="math/tex; mode=display">b(y)  =  1</script><script type="math/tex; mode=display">T(y) =  y</script><script type="math/tex; mode=display">\eta  =  log\frac{\phi}{1-\phi}</script><p>所以有</p>
-<script type="math/tex; mode=display">\theta^TX = \eta = log\frac{\phi}{1-\phi}</script><p>得到</p>
-<script type="math/tex; mode=display">\phi = \frac{1}{1+e ^ {-\theta^TX}}</script><p>这里的$\phi$就是伯努利分布中的P(Y=1|X)<br>而LR中的模型输出</p>
-<script type="math/tex; mode=display">h(x) = E(y|x) = 0 · P(Y=0|X) + 1 · P(Y=1|X) = \frac{1}{1+e ^ {-\theta^TX}}</script><p>这就推导出了逻辑斯蒂回归模型。也解释了为什么LR要用sigmoid函数，因为我们从广义线性模型出发，推导出的LR模型刚好就是sigmoid函数形式的。<br>并且sigmoid有很多良好的数学性质：</p>
+<p>最近实验室配了一台深度学习服务器，服务器刚到时基本上只装了 ubuntu 操作系统，所以我也基本上是算从头配置了一台深度学习服务器。现将配置过程记录于此，以便帮助他人和方便交流。</p>
+<p>首先，我的深度学习服务器的配置为：</p>
 <ul>
-<li>连续可导</li>
-<li>值域为（0,1）,给了模型可解释性，即将输出结果解释为对应于该分类的概率</li>
+<li>ubuntu 14.04 操作系统，16.04 应该也是一样的</li>
+<li>Anaconda3 集成的 python 环境，使用 conda 进行虚拟环境管理</li>
+<li>jupyterhub 提供的 jupyter notebook 功能</li>
+<li>cuda 9.0 + cudnn 7.1 + tensorflow 1.5.0</li>
 </ul>
-<p>下一节我们将从推导出的lr模型出发，去看看它的损失函数是怎么来的。</p>
-<h2 id="2-从极大似然估计到损失函数"><a href="#2-从极大似然估计到损失函数" class="headerlink" title="2. 从极大似然估计到损失函数"></a>2. 从极大似然估计到损失函数</h2><p>给定一组数据，我们需要用这组数据去找到最好的参数$\theta$。<br>我们认为使观测结果（即现有的数据）出现的概率最大的参数$\theta$就是最优的参数。<br>这种思想就是极大似然估计。<br>假设这组数据独立同分布，其联合概率可以写成各样本出现概率的乘积。即</p>
-<script type="math/tex; mode=display">L(\theta) = \prod_{i=1} ^ m P_i = \prod_{i=1} ^ m {P(y ^ {(i)}=1 | X ^ {(i)})}^{y ^ {(i)}}{P(y ^ {(i)}=0 | X ^ {(i)})} ^ {1-y ^ {(i)}}</script><p>以上函数称为似然函数。<br>我们的目标便是最大化似然函数，即找到使联合概率（也就是似然函数）最大的参数$\theta$。<br>为了方便求解，对似然函数取对数，得到对数似然函数：</p>
-<script type="math/tex; mode=display">log L(\theta) = \sum_{i=1} ^ m y ^ {(i)}log \frac{1}{1+e ^ {-\theta ^ TX}} + (1-y ^ {(i)})log \frac{1}{1+e ^ {\theta ^ TX}}</script><p>对对数似然函数取负号，求平均，就得到了LR模型的损失函数：</p>
-<script type="math/tex; mode=display">J(\theta) = -\frac{1}{m}\sum_{i=1}^m (y ^ {(i)}log \frac{1}{1+e ^ {-\theta^TX}} + (1-y^{(i)})log \frac{1}{1+e ^ {\theta^TX}})</script><p>现在我们的目标就就很明确了：<br>优化$J(\theta)$，找出使$J(\theta)$最小的参数$\theta$，就是我们认为的最优的$\theta$。</p>
-<h2 id="3-梯度下降法"><a href="#3-梯度下降法" class="headerlink" title="3. 梯度下降法"></a>3. 梯度下降法</h2><p>梯度下降法是常用的优化算法之一。<br>针对LR，梯度下降法的过程如下：<br>首先，有</p>
-<script type="math/tex; mode=display">J(\theta) = -\frac{1}{m}\sum_{i=1}^m (y ^ {(i)}log h(x^{(i)}) + (1-y^{(i)})log (1-h(x^{(i)}))</script><p>其中$h(x)  = \frac{1}{1+e ^ {-\theta^TX}}$<br>接下来求损失函数$J(\theta)$对参数$\theta$的梯度：</p>
-<script type="math/tex; mode=display">\frac{\partial J(\theta)}{\partial \theta} = - \frac{1}{m}\sum_{i=1}^m[\frac{y ^ {(i)}}{h(x^{(i)})}·\frac{\partial h(x^{(i)})}{\partial \theta} - \frac{1- y ^ {(i)}}{1 - h(x^{(i)})}·\frac{\partial h(x^{(i)})}{\partial \theta}] = -\frac{1}{m} \sum_{i=1}^m\frac{\partial h(x^{(i)})}{\partial \theta}·\frac{y^{(i)} - h(x^{(i)})}{ h(x^{(i)})(1 - h(x^{(i)}))}</script><p>将h(x)带入上式：</p>
-<script type="math/tex; mode=display">\frac{\partial J(\theta)}{\partial \theta} = \frac{1}{m}\sum_{i=1}^m( h(x^{(i)}) - y^{(i)})·x ^ {(i)}</script><p>得到迭代公式：</p>
-<script type="math/tex; mode=display">\theta := \theta - \alpha\frac{1}{m}\sum_{i=1}^m( h(x^{(i)}) - y^{(i)})·x ^ {(i)}</script><p>$\alpha$和$\frac{1}{m}$为常数，因此将其合并，得到：</p>
-<script type="math/tex; mode=display">\theta := \theta - \alpha\sum_{i=1}^m( h(x^{(i)}) - y^{(i)})·x ^ {(i)}</script><p>$\alpha$称为learning rate。<br>注意，公式中的变量均为向量形式。<br>至此，我们得到了参数$\theta$的迭代公式，不断迭代直到收敛或损失函数变化很小，我们就得到了最优参数$\theta$</p>
-<h2 id="4-正则化"><a href="#4-正则化" class="headerlink" title="4. 正则化"></a>4. 正则化</h2><h3 id="4-1-假设空间与奥卡姆剃刀原理"><a href="#4-1-假设空间与奥卡姆剃刀原理" class="headerlink" title="4.1 假设空间与奥卡姆剃刀原理"></a>4.1 假设空间与奥卡姆剃刀原理</h3><p>给定我们一组数据，我们认为这组数据为观测结果。符合这组观测结果的假设有很多。<br>我们可以把学习过程看做在所有假设组成的空间中进行搜索的过程。<br>在这个搜索过程中，我们可能会找到许多满足这组观测数据的假设。<br>比如，坐标系下两点，我们可以用直线拟合，也可以用二次曲线拟合等等。<br>当出现两个模型均很好地符合当前数据时，我们有一个选择模型的指导原则：</p>
-<blockquote>
-<p>奥卡姆剃刀原理：这是一种常用的、自然科学研究中最基本的原则，即“若有多个假设与观察一致，则选最简单的那个”</p>
-</blockquote>
-<p>因此，我们需要在模型的学习过程中，加入这个指导原则。<br>这个过程，就叫正则化。又叫结构风险最小化。</p>
-<h3 id="4-2-L0-L1-L2正则化"><a href="#4-2-L0-L1-L2正则化" class="headerlink" title="4.2 L0/L1/L2正则化"></a>4.2 L0/L1/L2正则化</h3><p>一般，我们认为，参数越少，模型越简单。<br>理想情况下，我们可以在损失函数中加入（不为0的）参数个数来惩罚模型复杂度。<br>即</p>
-<script type="math/tex; mode=display">J(\theta) = -\frac{1}{m}\sum_{i=1}^m (y ^ {(i)}log h(x^{(i)}) + (1-y^{(i)})log (1-h(x^{(i)})) + \lambda\sum_{i=1}^V1（\theta_i）</script><p>其中，V为参数数量，并且</p>
-<script type="math/tex; mode=display">\begin{equation}
-1(x) = \begin{cases}
-0, & \text{if x = 0}\newline
-1, & \text{if x != 0}
-\end{cases}
-\end{equation}</script><p>这种方法叫做L0正则化。<br>但实际中并不会使用L0正则化，因为很难求解。<br>因此实际中往往使用L1或L2正则化来替代L0正则化。<br>L1正则化为：</p>
-<script type="math/tex; mode=display">\lambda||\theta||_1 = \lambda \sum _{i=1}^V|\theta|</script><p>L2正则化为：</p>
-<script type="math/tex; mode=display">\lambda||\theta||_2 = \lambda \sqrt{\sum _ {i=1}^V \theta_i ^ 2}</script><p>L1正则化和L2正则化都对参数的大小进行了惩罚。这里先说明一个问题：</p>
-<blockquote>
-<p>为什么认为参数越小模型复杂度也越小呢？<br>因为越复杂的模型，越是尝试对所有样本进行拟合，包括一些异常点。<br>这会导致模型在较小的输入区间内，产生较大的输出波动。<br>较大的波动代表着这个区间内导数大，而只有较大的参数才会产生较大的导数。<br>因此参数越大，我们认为模型越复杂。</p>
-</blockquote>
-<p>在L1和L2正则化的选择中，我们需要知道：<br>L1正则化会产生更加稀疏的解，即求得的参数中会有更多的0；<br>L2正则化会产生更多非0但值较小的参数。</p>
-<p>也就是说，L1正则化会过滤掉一些无用特征（参数为0，特征就不起作用了），因此L1正则化也是一种特征选择方法。只不过与我们平时手动选择特征不同的是，L1正则化是一种嵌入式地特征选择方法，其特征选择过程与模型的训练过程融为一体，同时完成了。</p>
-<p>所以，当所有特征中只有少部分起作用，而我们人工无法辨别时，可以用L1正则化。当大部分特征都能起作用时，使用L2正则化也许更合适。</p>
-<h2 id="5-性能度量"><a href="#5-性能度量" class="headerlink" title="5. 性能度量"></a>5. 性能度量</h2><p>模型训练完毕后，我们需要指标来评价其性能。<br>在回归任务中，常用的性能度量是“均方误差”：</p>
-<script type="math/tex; mode=display">\frac{1}{m}\sum_{i=1}^m(h(x ^ {(i)}) - y^{(i)}) ^ 2</script><p>二分类常用的性能度量为查准率、查全率与F1。<br>对于二分类问题，可将样本根据其真实类别与预测类别的组合划分为如下情况：</p>
-<table>
-   <tr>
-      <td>真实情况</td>
-      <td>预测情况</td>
-      <td></td>
-   </tr>
-   <tr>
-      <td></td>
-      <td>正例</td>
-      <td>反例</td>
-   </tr>
-   <tr>
-      <td>正例</td>
-      <td>TP(真正例)</td>
-      <td>FN(假反例)</td>
-   </tr>
-   <tr>
-      <td>反例</td>
-      <td>FP(假正例)</td>
-      <td>TN(真反例)</td>
-   </tr>
-   <tr>
-      <td></td>
-   </tr>
-</table>
-
-<p>查准率P与查全率分别定义为：</p>
-<script type="math/tex; mode=display">P = \frac{TP}{TP+FP}</script><script type="math/tex; mode=display">R = \frac{TP}{TP+FN}</script><p>直观上理解，查准率就是我们预测的正例中，有多大比例预测正确了；<br>查全率则是，在原始样本的所有正例中，我们有多大比例预测正确了。</p>
-<p>查准率与查全率是一对相互矛盾的指标。一般来说，查准率高时，查全率往往偏低；查全率高时，查准率往往偏低。<br>通常两个模型的查准率与查全率无法比较孰优孰劣时，我们应该综合考虑这两个指标。<br>常用的是F1度量：</p>
-<script type="math/tex; mode=display">F1 = \frac{2·P·R}{P+R} = \frac{2·TP}{样例总数+TP-TN}</script><p>在平时的应用过程中，可以根据实际任务对查准率或查全率的要求来改变权重，来获取更一般的F度量。</p>
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>本文从广义线性模型出发，推导了LR模型的产生，损失函数的建立，如何去优化损失函数，正则化以及性能度量。希望能够帮助到大家。由于所学粗浅，文中如有错误或不足，还请各位读者批评指正，感激不尽！<br>我的邮箱：3120104930@zju.edu.cn</p>
+<p>有了以上配置或环境，服务器就非常好用了。无论是用户虚拟环境管理，还是使用 jupyter notebook 都非常方便。</p>
+<p>好了，接下来开始逐个介绍。</p>
+<h2 id="1-网络配置"><a href="#1-网络配置" class="headerlink" title="1. 网络配置"></a>1. 网络配置</h2><p>服务器刚到，第一步就是要进行网络配置。网络配置好之后，就可以将服务器放入机房，不用再忍受噪音，进行远程操作了。我这里的服务器是接入的校园网，因此也只介绍校园网下的网络配置，其他情况的同学需要去查一下资料配置。</p>
+<h3 id="1-1-接入校园网"><a href="#1-1-接入校园网" class="headerlink" title="1.1 接入校园网"></a>1.1 接入校园网</h3><p>首先，使用网线介入校园网，打通物理层面。注意不要接错网口，我之前因为接错网口，导致花了半下午时间找问题，可以说是很尴尬了。</p>
+<p>接下来，使用 <code>ifconfig</code> 命令来查看网卡类型，<code>eth0</code> or <code>em1</code> 这种，我这里是 <code>em1</code>。然后修改 <code>/etc/network/interfaces</code> 如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This file describes the network interfaces available on your system</span></span><br><span class="line"><span class="comment"># and how to activate them. For more information, see interfaces(5).</span></span><br><span class="line"><span class="comment"># The loopback network interface</span></span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line">auto em1</span><br><span class="line"><span class="comment">#iface em1 inet dhcp</span></span><br><span class="line">iface em1 inet static</span><br><span class="line">address xx.xx.xx.xx</span><br><span class="line">netmask xxx.xxx.xxx<span class="number">.0</span></span><br><span class="line">gateway xx.xx.xx.xxx</span><br><span class="line">dns-nameservers xx.xx.x.xx</span><br></pre></td></tr></table></figure></p>
+<p>上面的配置其实就是给服务器设置一个静态 ip ，我们可以通过这个静态 ip 访问该服务器。然后配置网管，DNS 服务器什么的。和 windows 下配置类似，实验室用过有线的应该都懂。</p>
+<p>配置好之后，就可以连接内网了。使用 <code>ping 10.xx.xxx.xxx（你的校园网内网 ip 地址）</code> 来检查是否能连内网。</p>
+<p>注意，我这里记录的是我们学校的校园网接入方式，我不清楚不同学校的校园网接入方式是否相同，需要大家搞清楚。</p>
+<h3 id="1-2-镜像源配置"><a href="#1-2-镜像源配置" class="headerlink" title="1.2 镜像源配置"></a>1.2 镜像源配置</h3><h4 id="1-2-1-更改-apt-get-镜像源"><a href="#1-2-1-更改-apt-get-镜像源" class="headerlink" title="1.2.1 更改 apt-get 镜像源"></a>1.2.1 更改 apt-get 镜像源</h4><p>将服务器只放在校园网环境下，这样做有两个好处：</p>
+<ol>
+<li>安全</li>
+<li>校园网速度非常快</li>
+</ol>
+<p>但很明显，如果只连校园网，我们将无法下载日常使用的软件或者包。但还好，这个问题很好解决，只需要修改镜像源即可。</p>
+<p>我们在使用 <code>apt-get install</code> 命令时，会向外网发送请求，下载我们需要的软件。而修改镜像源之后，则会转而向我们指定的网站发送请求。这里我们使用的是清华的镜像源，清华的镜像源使用校园网内网即可访问，非常适合我们这种校园网的服务器。</p>
+<p>首先，把 <code>/etc/apt/source.list</code> 文件备份，然后将 <code>source.list</code> 的内容修改如下（具体内容和 linux 发行版本有关，具体见 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="noopener">Ubuntu 镜像使用帮助</a>）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty main restricted universe multiverse</span><br><span class="line"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty main restricted universe multiverse</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse</span><br><span class="line"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse</span><br><span class="line"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-security main restricted universe multiverse</span><br><span class="line"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-security main restricted universe multiverse</span></span><br><span class="line"><span class="comment"># 预发布软件源，不建议启用</span></span><br><span class="line"><span class="comment"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse</span></span><br></pre></td></tr></table></figure>
+<p>然后就可以在内网下使用 <code>apt-get install</code> 命令了。</p>
+<h3 id="1-2-2-更改-pip-和-conda-源"><a href="#1-2-2-更改-pip-和-conda-源" class="headerlink" title="1.2.2 更改 pip 和 conda 源"></a>1.2.2 更改 pip 和 conda 源</h3><p>使用 pip 或者 conda 安装 python 模块非常方便，但是我们只接入了校园网，所以需要更改一下 pip 和 anaconda 的源。</p>
+<p>pip 更改方式如下：<br>修改 ~/.pip/pip.conf（没有就创建一个），内容如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">global</span>]</span><br><span class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure></p>
+<p>conda 更改方式如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 命令行输入如下命令</span></span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --set show_channel_urls yes</span><br></pre></td></tr></table></figure></p>
+<p>修改之后，可以测试一下速度，我这里能上 <code>10M/s</code>，还是非常快的。</p>
+<h3 id="1-2-3-外网访问"><a href="#1-2-3-外网访问" class="headerlink" title="1.2.3 外网访问"></a>1.2.3 外网访问</h3><p>如果是在需要访问外网，可以使用 vpn 连接到外网。我这里使用的是校内流传的一个软件，不同学校不同。</p>
+<p>使用 <code>sudo dpkg -i xl2tpd_1.2.5%2Bzju-1_amd64.deb</code> 安装之后，按照下面方式配置：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置用户名和密码</span></span><br><span class="line">$ sudo vpn-connect -c</span><br><span class="line">Configure L2TP VPN <span class="keyword">for</span> ZJU.</span><br><span class="line"><span class="comment"># 这里的Username是你的学号，后面的@代表你是10/30/50包月。</span></span><br><span class="line">Username: <span class="number">216.</span>...@<span class="number">10</span></span><br><span class="line">Password: 你的密码</span><br><span class="line"><span class="comment"># 配置完成，使用这个命令开启连接</span></span><br><span class="line">$ sudo vpn-connect</span><br><span class="line"><span class="comment">#连接成功，可以ping一下百度，看是否能连外网了</span></span><br><span class="line">$ ping www.baidu.com</span><br><span class="line"><span class="comment"># 重连，断开等，可以使用下面的命令查看</span></span><br><span class="line">$ vpn-connect -h</span><br></pre></td></tr></table></figure></p>
+<p>以上，基本上就是网络配置的内容了。以上配置好后，基本上就够一个服务器使用了，毕竟，作为计算型服务器，平时使用最多的也就是使用 ssh 远程访问和使用 pip 了。</p>
+<h2 id="2-环境配置"><a href="#2-环境配置" class="headerlink" title="2. 环境配置"></a>2. 环境配置</h2><p>这一节主要介绍下 python 环境配置。由于服务器需要多用户使用，因此虚拟环境必不可少。每个用户都使用自身的 python 虚拟环境，可以避免模块版本冲突等问题。此外，jupyter notebook 作为一个方便的 python 交互式环境，能在客户端使用它并且支持多用户使用，也是需要进行配置的。</p>
+<h3 id="2-1-python-虚拟环境"><a href="#2-1-python-虚拟环境" class="headerlink" title="2.1 python 虚拟环境"></a>2.1 python 虚拟环境</h3><p>python 环境我们使用 Anaconda 进行配置。Anaconda 集成了 python 环境和常用的模块，可以帮我们省很多功夫。</p>
+<p>使用 <code>sudo apt-get install anaconda3</code> 安装 Anaconda3。也可以去网上下载 anaconda3 的安装包，上传到服务器之后进行安装。Anyway，只要能够成功安装就行，这一步很简单。</p>
+<p>之后，可以在命令行输入<code>python</code> 和 <code>conda</code> 来查看是否安装成功。</p>
+<p>最后需要修改全局变量，因为此时，只有 root 用户能够使用该环境，其他用户无法正常使用。修改方式如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="string">'PATH=/usr/lib/anaconda/bin:$PATH'</span> &gt;&gt; /etc/profile.d/anaconda.sh</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure></p>
+<p>这样，所有用户都可以使用 Anaconda 了，也可以使用 conda 建立虚拟环境了。</p>
+<p>建议在使用服务器进行开发时，每位用户都在自己的 python 虚拟环境下进行开发，不要在全局安装 python 的包和库。建立虚拟环境的方式如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">list all env:</span><br><span class="line">    conda info --env</span><br><span class="line">create a simple virtual env:</span><br><span class="line">    conda create -n MyEnvName python=<span class="number">3</span>*</span><br><span class="line">delete virtual env:</span><br><span class="line">    conda env remove -n MyEnvName</span><br></pre></td></tr></table></figure></p>
+<p>建立完成后，使用 <code>source activate MyEnvName</code> 进入虚拟环境，使用 <code>source deactivate</code> 推出虚拟环境。</p>
+<p>需要注意的是，在自己的虚拟环境下，使用 pip 安装 python 模块，还是安装到全局中的，需要使用 <code>conda -n myEnv install pip</code> 或者在虚拟环境下使用 <code>conda install pip</code> 来安装虚拟环境中的pip，这样在虚拟环境中使用pip就能将包安装到虚拟环境中了。</p>
+<h3 id="2-2-jupyter-notebook-配置"><a href="#2-2-jupyter-notebook-配置" class="headerlink" title="2.2 jupyter notebook 配置"></a>2.2 jupyter notebook 配置</h3><p>在服务器开启 jupyter notebook 服务，可以在客户端使用浏览器登陆服务器的 jupyter notebook，但是如果多用户同时使用，就需要每个用户都进行配置然后开启服务，非常麻烦。</p>
+<p>Jupyterhub 是一组进程，使用 JupyterHub 可以为组中的每个人分别提供单个用户的 Jupyter Notebook 服务器。具体使用方式见<a href="https://jupyterhub.readthedocs.io/en/0.7.0/quickstart.html" target="_blank" rel="noopener">JupyterHub</a>。</p>
+<h2 id="3-深度学习环境：cuda9-0-cudnn7-1-tensorflow-1-5-0"><a href="#3-深度学习环境：cuda9-0-cudnn7-1-tensorflow-1-5-0" class="headerlink" title="3. 深度学习环境：cuda9.0 + cudnn7.1 + tensorflow 1.5.0"></a>3. 深度学习环境：cuda9.0 + cudnn7.1 + tensorflow 1.5.0</h2><p>我安装深度学习环境主要是为了使用 tensorflow, 但不同版本的 tensorflow 需要安装不同版本的 cuda ，所以需要先明确自己使用的 tensorflow 版本。我要使用 tensorflow 1.5.0 ，所以选择安装 cuda9.0 + cudnn7.1。</p>
+<h3 id="3-1-什么是-cuda-和-cudnn"><a href="#3-1-什么是-cuda-和-cudnn" class="headerlink" title="3.1 什么是 cuda 和 cudnn"></a>3.1 什么是 cuda 和 cudnn</h3><p>CUDA 是由 NVIDIA 推出的一种集成技术，用于 GPU 的并行计算。</p>
+<p>CUDA 的作用，是与通用程序对接。比如，我们使用 python 写的程序，将数据和运算逻辑准备好之后，需要调用 CUDA 库提供的函数来传递给 CUDA，CUDA 再调用显卡驱动对 CUDA 程序进行编译，然后再将编译好的程序和数据传送给 GPU 进行运算。</p>
+<p>而 cuDNN 是用于深度神经网络的 GPU 加速计算库。它可以将卷积神经网路的计算变换为对 GPU 更友好的矩阵运算，可以有效提高整个网络的训练速度。</p>
+<p>要使用 tensorflow 的 GPU 版本，我们需要安装 CUDA 和 cuDNN。</p>
+<h3 id="3-2-安装-cuda9-0-cudnn7-1"><a href="#3-2-安装-cuda9-0-cudnn7-1" class="headerlink" title="3.2 安装 cuda9.0 + cudnn7.1"></a>3.2 安装 cuda9.0 + cudnn7.1</h3><h4 id="3-2-1-安装前"><a href="#3-2-1-安装前" class="headerlink" title="3.2.1 安装前"></a>3.2.1 安装前</h4><ol>
+<li>首先，确保你的电脑上有 CUDA 支持的 GPU 硬件。</li>
+</ol>
+<p>在终端下，输入 <code>lspci | grep -i nvidia</code> 来查看。如果有 GPU 安装，会显示结果。</p>
+<ol>
+<li>确保系统中安装了 gcc</li>
+</ol>
+<p>使用 <code>gcc --version</code> 来查看 gcc 版本，确保系统中已经安装了 gcc 。</p>
+<ol>
+<li>验证系统是否安装了正确的内核头文件和开发包</li>
+</ol>
+<p>使用 <code>uname -r</code> 来查看系统的核版本。<br>使用 <code>$ sudo apt-get install linux-headers-$(uname -r)</code> 来安装当前正在运行的内核的内核头文件和开发包。</p>
+<ol>
+<li>下载 CUDA</li>
+</ol>
+<p>CUDA 可以在 <a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="noopener">NVIDIA 网站</a> 下载，选择自己相应的选项后，就可以下载了。我这里下载的是 CUDA9.0 的 runfile(local) 。 然后上传到服务器。</p>
+<h4 id="3-2-2-安装-cuda"><a href="#3-2-2-安装-cuda" class="headerlink" title="3.2.2 安装 cuda"></a>3.2.2 安装 cuda</h4><p>到之前我们下载的 runfile 文件目录下，运行如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sh cuda_&lt;version&gt;_linux.run</span><br></pre></td></tr></table></figure></p>
+<p>进行安装。</p>
+<p>安装程序会提示如下内容：</p>
+<ul>
+<li>EULA Acceptance：接受协议即可</li>
+<li>CUDA Driver installation：如果你已经装好了 nvidia 显卡驱动，这里需要选择 <code>n</code> 。注意，你的 nvidia 显卡驱动版本需要适配 CUDA 版本</li>
+<li>CUDA Toolkit installation，location，and /usr/local/cuda symbolic link：这里全选 <code>y</code> 和默认即可</li>
+<li>CUDA Samples installation and location：这个最好安装一下，后续可以用于验证 CUDA 是否安装正确</li>
+</ul>
+<p>安装完成后，重启系统。</p>
+<h4 id="3-2-3-安装后"><a href="#3-2-3-安装后" class="headerlink" title="3.2.3 安装后"></a>3.2.3 安装后</h4><p>重启系统后，需要修改环境变量。具体操作如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ export PATH=/usr/local/cuda-9.0/bin$&#123;PATH:+:$&#123;PATH&#125;&#125;</span><br><span class="line">$ export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64\</span><br><span class="line">                         $&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>至此，CUDA 安装完毕。接下来我们验证一下 CUDA 是否安装成功。</p>
+<ol>
+<li>检查 /dev/ 目录下是否存在以 nvidia* 开头的多个文件</li>
+<li><p>检查 CUDA Toolkit 是否安装成功</p>
+<p> 终端输入 <code>nvcc -V</code> 会输出 CUDA 版本信息</p>
+</li>
+<li><p>编译 Samples 例子</p>
+<p> 进入到 Samples 安装目录，终端输入 <code>make</code> 进行编译</p>
+</li>
+<li><p>编译完成后测试</p>
+<p> 进入 <code>bin/x86_64/linux/release/</code> 目录。</p>
+<p> 运行 deviceQuery 程序： <code>$ sudo ./deviceQuery</code> ，查看输出结果，最后一行显示 <code>Result = PASS</code> 表示通过测试。</p>
+<p> 运行 bandwidthTest 程序： <code>$ sudo ./bandwidthTest</code>, 查看输出结果，最后一行显示 <code>Result = PASS</code> 表示通过测试。</p>
+</li>
+</ol>
+<p>如果以上均没有问题，则说明 CUDA 安装成功。</p>
+<h4 id="3-2-4-安装-cudnn"><a href="#3-2-4-安装-cudnn" class="headerlink" title="3.2.4 安装 cudnn"></a>3.2.4 安装 cudnn</h4><p>cudnn 的安装非常简单，只有以下几步：</p>
+<ol>
+<li><p>下载 cudnn 安装包</p>
+<p> 前往 <a href="https://developer.nvidia.com/cudnn" target="_blank" rel="noopener">NVIDIA cuDNN home page</a>, 注册账号之后，下载 cudnn 压缩包（tgz格式）。注意，win10 操作系统在下载 tgz 格式文件时，会将后缀名转变为 .solita* ，这个文件在 linux 下也能解压，但是会报错，实践证明，解压出的文件也是不能用的，因此，建议在 linux 系统或 mac os 下下载上述压缩包。然后上传到服务器。</p>
+</li>
+<li><p>解压压缩包</p>
+<p> 输入命令：<code>$ tar -xzvf cudnn-9.0-linux-x64-v7.tgz</code>，会在当前目录下生成一个 cuda/ 目录。</p>
+</li>
+<li><p>copy 以下文件到 CUDA Toolkit 目录下</p>
+<p> 终端输入以下命令：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp cuda/include/cudnn.h /usr/local/cuda/include</span><br><span class="line">$ sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64</span><br><span class="line">$ sudo chmod a+r /usr/local/cuda/include/cudnn.h</span><br><span class="line">$ sudo chmod a+r /usr/local/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>经过以上三步，cudnn 也安装好了，接下来只需要安装 tensorflow 了！</p>
+<h3 id="3-3-安装-tensorflow"><a href="#3-3-安装-tensorflow" class="headerlink" title="3.3 安装 tensorflow"></a>3.3 安装 tensorflow</h3><p>最简单的方式当然是使用 pip 进行安装了！</p>
+<p>在终端下输入 <code>pip install tensorflow-gpu==1.5.0</code> 即可。</p>
+<p>注意我们安装的是 gpu 版本，所以一定要是 <code>tensorflow-gpu</code>，等号后面代表我们想要安装的 tensorflow 版本。</p>
+<p>安装成功后，终端输入 <code>python</code> 进入 python 环境，运行以下代码，若运行成功，则说明我们的 tensorflow 环境也就配置成功了！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> tensorflow</span><br></pre></td></tr></table></figure>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p>要配置及维护好一个深度学习服务器还有很长的路要走。比如 ACL 文件权限管理系统，用户权限管理，shell script 学习等。</p>
+<p>我这里记录的内容，能够让服务器实现多用户深度学习开发，能对于现在的实验室已经够用了，之后后面的内容，如果有需要会继续学习。</p>
+<p>以上内容，最耗费时间的就是 CUDA 和 cudnn 环境的配置了。刚开始偷懒，想跟着中文博客去安装，后来看了数十篇博客，中间碰到各种问题又不断 Google ，解决了一个问题又出现新的问题，真的非常心累。 后来跟着 NVIDIA 的官网教程，重新安装了一遍，总算是成功了。</p>
+<p>这让我明白，无论是学习新东西也好，使用一个新工具也好，最好的资料一定是官方编写的。网上铺天盖地的博客，无非是对论文或者官方教程的二次加工。所以一定不要偷懒，耐着性子去琢磨英文版的官方教程，一定是没有问题的！</p>
+<p>我这篇博客其实是对我配置深度学习服务器的梳理，也是对查找的各种资料的总结和对官方教程的二次加工。前面的内容应该很好配置。 如果 CUDA 或 cudnn 的安装出了问题，建议仔细研读 NVIDIA 的官方教程。</p>
+<p><a href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html" target="_blank" rel="noopener">Installation Guide Linux :: CUDA Toolkit Documentation</a></p>
+<p><a href="https://docs.nvidia.com/deeplearning/sdk/cudnn-install/" target="_blank" rel="noopener">cuDNN Installation Guide :: Deep Learning SDK Documentation</a></p>
 
       
     </div>
@@ -526,15 +564,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/05/13/python文本编码/" rel="next" title="Python 文本编码">
+                <i class="fa fa-chevron-left"></i> Python 文本编码
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/13/python文本编码/" rel="prev" title="Python 文本编码">
-                Python 文本编码 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -681,7 +719,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-从广义线性模型到sigmoid函数"><span class="nav-number">1.</span> <span class="nav-text">1.从广义线性模型到sigmoid函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-从极大似然估计到损失函数"><span class="nav-number">2.</span> <span class="nav-text">2. 从极大似然估计到损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-梯度下降法"><span class="nav-number">3.</span> <span class="nav-text">3. 梯度下降法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-正则化"><span class="nav-number">4.</span> <span class="nav-text">4. 正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-假设空间与奥卡姆剃刀原理"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 假设空间与奥卡姆剃刀原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-L0-L1-L2正则化"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 L0/L1/L2正则化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-性能度量"><span class="nav-number">5.</span> <span class="nav-text">5. 性能度量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在后面"><span class="nav-number">6.</span> <span class="nav-text">写在后面</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-网络配置"><span class="nav-number">1.</span> <span class="nav-text">1. 网络配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-接入校园网"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 接入校园网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-镜像源配置"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 镜像源配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-更改-apt-get-镜像源"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 更改 apt-get 镜像源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-更改-pip-和-conda-源"><span class="nav-number">1.3.</span> <span class="nav-text">1.2.2 更改 pip 和 conda 源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-外网访问"><span class="nav-number">1.4.</span> <span class="nav-text">1.2.3 外网访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-环境配置"><span class="nav-number">2.</span> <span class="nav-text">2. 环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-python-虚拟环境"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 python 虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-jupyter-notebook-配置"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 jupyter notebook 配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-深度学习环境：cuda9-0-cudnn7-1-tensorflow-1-5-0"><span class="nav-number">3.</span> <span class="nav-text">3. 深度学习环境：cuda9.0 + cudnn7.1 + tensorflow 1.5.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-什么是-cuda-和-cudnn"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 什么是 cuda 和 cudnn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-安装-cuda9-0-cudnn7-1"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 安装 cuda9.0 + cudnn7.1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-安装前"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 安装前</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-安装-cuda"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 安装 cuda</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-安装后"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 安装后</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-安装-cudnn"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4 安装 cudnn</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-安装-tensorflow"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 安装 tensorflow</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-总结"><span class="nav-number">4.</span> <span class="nav-text">4. 总结</span></a></li></ol></div>
             
 
           </div>
@@ -855,9 +893,9 @@
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'https://zhuyuhe.github.io/2018/01/21/浅谈逻辑斯蒂回归/';
-        this.page.identifier = '2018/01/21/浅谈逻辑斯蒂回归/';
-        this.page.title = '机器学习算法系列（1）- 逻辑斯蒂回归';
+        this.page.url = 'https://zhuyuhe.github.io/2018/05/20/服务器配置指南/';
+        this.page.identifier = '2018/05/20/服务器配置指南/';
+        this.page.title = '深度学习服务器完整配置指南';
       };
       function loadComments () {
         var d = document, s = d.createElement('script');

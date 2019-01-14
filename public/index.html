@@ -295,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhuyuhe.github.io/2018/01/25/支持向量机/">
+    <link itemprop="mainEntityOfPage" href="https://zhuyuhe.github.io/2018/05/20/服务器配置指南/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LITD">
@@ -314,7 +314,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/25/支持向量机/" itemprop="url">机器学习算法系列（2）- 支持向量机</a></h1>
+                <a class="post-title-link" href="/2018/05/20/服务器配置指南/" itemprop="url">深度学习服务器完整配置指南</a></h1>
         
 
         <div class="post-meta">
@@ -326,7 +326,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-25T21:29:44+08:00">2018-01-25</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-20T14:32:39+08:00">2018-05-20</time>
             
 
             
@@ -344,9 +344,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/01/25/支持向量机/#comments" itemprop="discussionUrl">
+                <a href="/2018/05/20/服务器配置指南/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/01/25/支持向量机/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/05/20/服务器配置指南/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -354,7 +354,7 @@
 
           
           
-             <span id="/2018/01/25/支持向量机/" class="leancloud_visitors" data-flag-title="机器学习算法系列（2）- 支持向量机">
+             <span id="/2018/05/20/服务器配置指南/" class="leancloud_visitors" data-flag-title="深度学习服务器完整配置指南">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -379,7 +379,7 @@
                 
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
-                <span title="字数统计">502 </span>
+                <span title="字数统计">8.1k </span>
               
 
               
@@ -393,7 +393,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">0:01 </span>
+                <span title="阅读时长">0:08 </span>
               
             </div>
           
@@ -416,13 +416,196 @@
         
           
           
-前言这节来讲一讲支持向量机（Support Vector Machine, SVM）这个难啃的骨头。照例，我们从以下路线来梳理整个算法的脉络：模型来源 —&gt; 损失函数 —&gt; 优化损失函数 —&gt; 正则化其实这对应着统计学习方法的三要素：
+最近实验室配了一台深度学习服务器，服务器刚到时基本上只装了 ubuntu 操作系统，所以我也基本上是算从头配置了一台深度学习服务器。现将配置过程记录于此，以便帮助他人和方便交流。
+首先，我的深度学习服务器的配置为：
 
-模型：就像上一篇逻辑斯蒂回归模型中，我们从
+ubuntu 14.04 操作系统，16.04 应该也是一样的
+Anaconda
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/25/支持向量机/#more" rel="contents">
+            <a class="btn" href="/2018/05/20/服务器配置指南/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhuyuhe.github.io/2018/05/13/python文本编码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LITD">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LITD">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/13/python文本编码/" itemprop="url">Python 文本编码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T14:58:14+08:00">2018-05-13</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/13/python文本编码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/13/python文本编码/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/13/python文本编码/" class="leancloud_visitors" data-flag-title="Python 文本编码">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">5.7k </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">0:06 </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+
+转载请注明出处：Python文本编码
+
+相信大家都碰到过令人头疼的python编码问题，比如：&#39;ascii&#39; codec can&#39;t decode byte UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decod
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/13/python文本编码/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -684,7 +867,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -697,7 +880,7 @@
                 
                 <div class="site-state-item site-state-tags">
                   
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
@@ -763,7 +946,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">5k</span>
+    <span title="站点总字数">18k</span>
   
 
   
@@ -772,7 +955,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点总阅读时间">0:05</span>
+    <span title="站点总阅读时间">0:18</span>
   
 </div>
 

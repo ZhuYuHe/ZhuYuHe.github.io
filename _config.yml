@@ -8,7 +8,7 @@ subtitle:
 email: 3120104930@zju.edu.cn
 description:
 author: LITD
-keyword: "Machine Learning, Deeplearning Learning, NLP, 算法, 数据挖掘"
+keyword: "Machine Learning, Deeplearning Learning, NLP, 算法, 数据挖掘, 自然语言处理"
 language: zh-Hans
 timezone:
 
@@ -80,7 +80,7 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/ZhuYuHe/ZhuYuHe.github.io.git
+  repo: git@github.com:ZhuYuHe/ZhuYuHe.github.io.git
   branch: master
 
 
