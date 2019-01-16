@@ -1,0 +1,93 @@
+---
+author: Автор
+cheers:
+  excellent: Великолепно
+  good: Хорошо
+  great: Замечательно
+  nice: Неплохо
+  ok: OK
+  um: Эм..
+counter:
+  archive_posts:
+    four: "%d записи всего."
+    one: 1 запись.
+    other: "%d записей всего."
+    three: "%d записи всего."
+    two: "%d записи всего."
+    zero: Нет записей.
+  categories:
+    four: "%d категории всего."
+    one: 1 категория.
+    other: "%d категорий всего."
+    three: "%d категории всего."
+    two: "%d категории всего."
+    zero: Нет категорий.
+  tag_cloud:
+    four: "%d тэга всего."
+    one: 1 тэг.
+    other: "%d тэгов всего."
+    three: "%d тэга всего."
+    two: "%d тэга всего."
+    zero: Нет тэгов.
+footer:
+  powered: Powered by %s
+  theme: Theme
+keep_on: Продолжаю писать.
+menu:
+  about: О сайте
+  archives: Архив
+  categories: Категории
+  home: Главная
+  schedule: Календарь
+  search: Поиск
+  sitemap: Карта сайта
+  tags: Тэги
+  commonweal: Страница 404
+page:
+  tags: тэги
+  totally: Всего
+post:
+  copyright:
+    author: Автор записи
+    license_content: Все записи на этом сайте защищены лицензией <a href="%s" rel="external
+      nofollow" target="_blank">%s</a> если не указано дополнительно.
+    license_title: Информация об авторских правах
+    link: Ссылка на запись
+  created: Дата создания записи
+  in: в категории
+  min2read: Время чтения в минутах
+  modified: Дата обновления записи
+  more: далее
+  posted: Размещено
+  read_more: Читать полностью
+  sticky: Ссылка
+  toc_empty: Эта запись без оглавления
+  totalcount: Общее кол-во слов в записях
+  totaltime: Время чтения всего сайта
+  untitled: Без имени
+  visitors: Просмотров
+  wordcount: Кол-во слов в статье
+reward:
+  alipay: Alipay
+  bitcoin: Bitcoin
+  donate: Донат
+  wechatpay: WeChat Pay
+search:
+  placeholder: Поиск...
+sidebar:
+  overview: Обзор
+  toc: Содержание
+state:
+  categories: Категории
+  pages: Страницы
+  posts: Архив
+  tags: Тэги
+symbol:
+  colon: ":"
+  comma: ", "
+  period: ". "
+title:
+  archive: Архив
+  category: Категория
+  schedule: Календарь
+  tag: Тэг
