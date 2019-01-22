@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="NLP," />
+
+
+<meta name="description" content="0. 写在前面要说NLP最近最火的是什么，那必是BERT无疑了。强悍如BERT，在十多项NLP的任务上强势屠榜，业界声称BERT将开创NLP领域新的纪元。在BERT刚出来的时候，就在各种公众号上看过各种原理解释，但一直没有去认真研究论文。后来在PaperWeekly公众号上阅读了万字长文《NLP的巨人肩膀》，算是把BERT的诞生史过了一遍。在看这篇文章的过程中发现Word2Vec到BERT中间的">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BERT发展史（一）从词嵌入讲起">
+<meta property="og:url" content="https://zhuyuhe.github.io/2019/01/18/BERT1/index.html">
+<meta property="og:site_name" content="LITD">
+<meta property="og:description" content="0. 写在前面要说NLP最近最火的是什么，那必是BERT无疑了。强悍如BERT，在十多项NLP的任务上强势屠榜，业界声称BERT将开创NLP领域新的纪元。在BERT刚出来的时候，就在各种公众号上看过各种原理解释，但一直没有去认真研究论文。后来在PaperWeekly公众号上阅读了万字长文《NLP的巨人肩膀》，算是把BERT的诞生史过了一遍。在看这篇文章的过程中发现Word2Vec到BERT中间的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://zhuyuhe.github.io/2019/01/18/BERT1/tf-idf.png">
+<meta property="og:image" content="https://zhuyuhe.github.io/2019/01/18/BERT1/1547798055964.png">
+<meta property="og:image" content="https://zhuyuhe.github.io/2019/01/18/BERT1/1547798090470.png">
+<meta property="og:updated_time" content="2019-01-18T08:53:34.015Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BERT发展史（一）从词嵌入讲起">
+<meta name="twitter:description" content="0. 写在前面要说NLP最近最火的是什么，那必是BERT无疑了。强悍如BERT，在十多项NLP的任务上强势屠榜，业界声称BERT将开创NLP领域新的纪元。在BERT刚出来的时候，就在各种公众号上看过各种原理解释，但一直没有去认真研究论文。后来在PaperWeekly公众号上阅读了万字长文《NLP的巨人肩膀》，算是把BERT的诞生史过了一遍。在看这篇文章的过程中发现Word2Vec到BERT中间的">
+<meta name="twitter:image" content="https://zhuyuhe.github.io/2019/01/18/BERT1/tf-idf.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://zhuyuhe.github.io/2019/01/18/BERT1/"/>
+
+
+  <title>BERT发展史（一）从词嵌入讲起 | LITD</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113128154-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113128154-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LITD</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhuyuhe.github.io/2019/01/18/BERT1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LITD">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LITD">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BERT发展史（一）从词嵌入讲起</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-18T15:15:46+08:00">2019-01-18</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/01/18/BERT1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/18/BERT1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/01/18/BERT1/" class="leancloud_visitors" data-flag-title="BERT发展史（一）从词嵌入讲起">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">4.1k </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">0:04 </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<h3 id="0-写在前面"><a href="#0-写在前面" class="headerlink" title="0. 写在前面"></a>0. 写在前面</h3><p>要说NLP最近最火的是什么，那必是BERT无疑了。强悍如BERT，在十多项NLP的任务上强势屠榜，业界声称BERT将开创NLP领域新的纪元。在BERT刚出来的时候，就在各种公众号上看过各种原理解释，但一直没有去认真研究论文。后来在PaperWeekly公众号上阅读了万字长文《NLP的巨人肩膀》，算是把BERT的诞生史过了一遍。在看这篇文章的过程中发现Word2Vec到BERT中间的那么多演变自己都没有好好研究过，于是打算写BERT发展史系列文章，从传统的词嵌入开始，详细讲解词嵌入往BERT发展的过程及其中的思想的演变过程。这一系列涉及到很多算法，基本上涵盖了大部分比较重要的NLP技术和思想，有些是我接触过的，有些我还没有接触过，因此也希望写作的过程能够push自己去学习，去进步。          </p>
+<p>我希望在这一系列文章中尽量以自己的话语阐述各个算法背后的思想和原理，多输出一些自己的理解，并在最后附上我个人认为学习这些算法比较好的材料和教程。如果看我的文章没有太理解，也可以多去看看参考材料。</p>
+<h3 id="1-机器学习流程"><a href="#1-机器学习流程" class="headerlink" title="1.机器学习流程"></a>1.机器学习流程</h3><p>什么是机器学习？抛开严肃的定义，在我看来，<strong>机器学习（这里特指有监督学习）就是使用计算机对事件的结果进行建模的过程</strong>。用数学符号来表示就是$f(x)-&gt;y​$，其中$y​$代表事件的结果，$x​$代表影响事件结果的各个因素，f代表我们使用的机器学习算法。即，我们希望将事件结果与影响结果的因素以某种函数的形式映射起来。</p>
+<p>比如，主人公算法小白菜现在在上小学五年级，我们要预测他在期末考试中能否及格。事件的结果就是能及格和不能及格，影响事件结果的因素则有很多，这些因素有的对预测结果很重要，有的则无关紧要。比如算法小白菜在每次月考中的成绩，对于预测就很重要，而算法小白菜的身高则无关紧要。机器学习中，挖掘影响事件结果因素的过程称为特征工程，这一步的目的是依据现有数据挖掘出对结果有影响的因素（也叫特征），然后使用这些特征对结果进行建模。</p>
+<p>因此，一个大致的数据挖掘流程为：数据预处理—&gt;特征工程—&gt;建模。很多时候，挖掘和发现出好的特征对最后结果的影响甚至要大于模型本身。</p>
+<p>其实说了这么多，我只是想说明，好的特征对于建模的重要性。就像我们这世界有果皆有因，一件事情发生的背后，定有各种因素在背后支撑。我们希望计算机能够帮助我们建立各种因素取值和事件结果的对应关系，但在此之前，如何确定这些因素则是个让人头疼的东西。</p>
+<h3 id="2-词嵌入"><a href="#2-词嵌入" class="headerlink" title="2. 词嵌入"></a>2. 词嵌入</h3><p>在互联网中，我们每天都会接触到海量的文本信息。所谓NLP，就是使用计算机处理自然语言的过程。而我们都知道，计算机只能处理数值，因此自然语言需要以一定的形式转化为数值。词嵌入就是将词语（word）映射为数字的方式。一个单纯的实数包含的信息太少，一般我们映射为一个数值向量。这时我们会发现一个问题，怎么把词语转换为数值向量？自然语言本身蕴含了语义和句法等特征，如何在转换过程中保留这些抽象的特征？这点其实很重要，因为如果没有将自然语言的特征很好的保留下来，后续的所有工作就是对一些无意义的信息进行建模，自然得不到好的结果。纵观NLP的发展史，很多革命性的成果都是词嵌入的发展成果，如Word2Vec、ELMo和BERT，其实都是很好地将自然语言的特征在转换过程中进行了保留。</p>
+<p>接下来我会以例子的形式介绍几个基于频率的词嵌入方法。</p>
+<h4 id="2-1-词频向量"><a href="#2-1-词频向量" class="headerlink" title="2.1 词频向量"></a>2.1 词频向量</h4><p>比如我们有两个文档（Document）：</p>
+<p>D1：我 叫 算法 小 白菜 。我 很 懒惰 。</p>
+<p>D2：算法 小 白菜 是 一个 懒惰 的 人 。</p>
+<p>这里已经对句子进行了分词，即将各个句子拆分为词语的组合，词语之间用空格隔开。</p>
+<p>这两篇文档包含的所有非重复词构成一个词典（dictionary）：{“我”，“叫”，“算法”，“小”，“白菜”，“。”，“很”，“懒惰”，“是”，“一个”，“的”，“人”}。</p>
+<p>这样每篇文档中词典中词语出现的频率如下表所示：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">我</th>
+<th style="text-align:center">叫</th>
+<th style="text-align:center">算法</th>
+<th style="text-align:center">小</th>
+<th style="text-align:center">白菜</th>
+<th style="text-align:center">。</th>
+<th style="text-align:center">很</th>
+<th style="text-align:center">懒惰</th>
+<th style="text-align:center">是</th>
+<th style="text-align:center">一个</th>
+<th style="text-align:center">的</th>
+<th style="text-align:center">人</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">D1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">D2</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>D1行“我”列的数值为2代表在文档D1中，“我”这个词出现了两次。现在我们通过以上表格得到了一个词频矩阵。我们可以使用列向量来表示一个词语，比如使用[2,0]来表示“我”这个词；使用行向量来表示一篇文档，比如使用[2,1,1,1,1,2,1,1,0,0,0,0]来表示文档D1。</p>
+<p>OK，以上就是使用词频向量进行词嵌入的过程。但在实际使用过程中许多细节会有变种。比如词典的组织方式。在真实世界中，我们的语料数据通常是包含数十万到上百万篇文档的，这些文档包含的非重复词会非常多。而每篇文档包含的词语数量相对于词典中的词语数量是非常小的，这会导致词频矩阵中会出现非常多的0。所以组织词典的另外一个方式是按词语出现的频率排序，选择频率最高的前1000个词语组成词典。</p>
+<h4 id="2-2-TF-IDF向量"><a href="#2-2-TF-IDF向量" class="headerlink" title="2.2 TF-IDF向量"></a>2.2 TF-IDF向量</h4><p>首先思考下词频矩阵有什么局限性。比如一篇关于游戏的文章，游戏这个词的词频会比较高，但像“的”、“和”这种通用词（NLP中叫停用词）出现的频率也非常高。从特征的角度出发，游戏这个词对这篇文章来说是个重要特征，“的”、“和”这种词则是不重要的特征，但词频矩阵这种词嵌入方式的结果却给予了这两种特征相似的重要性。</p>
+<p>TF-IDF（词频-逆文档频率）可以通过给予通用词较小的计算权重来解决这个问题。继续看例子。</p>
+<p>我们有两篇文档D1和D2，每篇文章中所包含的词语及其词频如下图所示：</p>
+<p><img src="/2019/01/18/BERT1/tf-idf.png" style="zoom:50%"></p>
+<p>TF的定义如下：</p>
+<p>TF = (词语w在一篇文档中出现的次数)/（文档中的词语总数）</p>
+<p>根据这个定义，可以计算TF(关于，D1) = 1/9；TF(学习，D2) = 3/9。</p>
+<p>TF表示的是该词语对于该文档的贡献程度，我们认为与文章相关的词语出现的频率应该会比较高。</p>
+<p>IDF的定义如下：</p>
+<p>IDF = log（（文档的数量）/ （包含词语w的文档数量））</p>
+<p>根据这个定义，得到IDF(关于) = log(2/2) = 0；IDF(游戏) = log(2/1) = 0.301。</p>
+<p>IDF想表达的是，如果一个词语在大部分甚至所有文档中都出现（词语中的中央空调），那么这个词语对于任意一篇文档都是不重要的。</p>
+<p>最后，TF-IDF的计算方式就是把TF和IDF相乘即可。来看一下：</p>
+<p>TF-IDF(关于，D1) = （1/9）* 0 = 0</p>
+<p>TF-IDF(游戏，D1) = （3/9） * 0.301 = 0.1003</p>
+<p>TF-IDF(学习，D2) = （3/9）* 0.301 = 0.1003</p>
+<p>这下就比较符合我们的直觉了：重要的词语（特征）应该具有更高的权重。</p>
+<p>将词频矩阵中的词频值替换为TF-IDF值，我们就可以得到文档和词语的向量表示了。同时，由于TF-IDF的特征，TF-IDF还经常被用来提取文章中的关键词。</p>
+<h4 id="2-3-词共现向量"><a href="#2-3-词共现向量" class="headerlink" title="2.3 词共现向量"></a>2.3 词共现向量</h4><p>这个方法的出发点是：相似的词语会经常同时出现，并且具有相似的上下文。比如：苹果是水果。香蕉是水果。苹果和香蕉具有相似的上下文。</p>
+<p>在深入词共现矩阵的构造和定义之前，我们先来介绍两个概念：共现和上下文窗口。</p>
+<p>共现 — 对于给定的语料，共现指词语w1和词语w2在给定上下文窗口中共同出现的次数。</p>
+<p>上下文窗口 — 计算共现时所指定的窗口大小，由距离和方向指定。</p>
+<p>同样以一个例子来说明：</p>
+<p>Corpus = He is not lazy. He is intelligent. He is smart.</p>
+<p>给定距离2和双向的上下文窗口，该例的词共现矩阵如下：</p>
+<p><img src="/2019/01/18/BERT1/1547798055964.png" alt="1547798055964"></p>
+<p>以图中的红色框和蓝色框为例。红色框表示“He”和“is”的共现次数为4，如下图所示：</p>
+<p><img src="/2019/01/18/BERT1/1547798090470.png" alt="1547798090470"></p>
+<p>而蓝色框值为0，代表词“lazy”从未出现在词“intelligent”的方圆两词之内。</p>
+<p>在词共现矩阵中，我们可以使用行向量或者列向量来表示词语（矩阵是对称的）。但存在的问题与词频矩阵相似，向量的维度等于词典的大小V，这将导致向量是稀疏且高维的，不利于计算。在实际使用中，通常是使用PCA或SVD等技术，将词共现矩阵降维为V×k（k&lt;&lt;V）的大小，这样，每个词语将使用一个k维大小的向量来表示。</p>
+<h3 id="3-几点想法"><a href="#3-几点想法" class="headerlink" title="3. 几点想法"></a>3. 几点想法</h3><ul>
+<li>自然语言的特征是非常抽象的，如何将“苹果”这个词的语义以数值向量的方式体现出来是非常有挑战性的。词频向量和TF-IDF向量都是从词语和文档的关系角度出发的，从词语对文档的重要程度出发去完成词语/文档到向量的转换。而词共现矩阵则是从词语与词语之间的关系角度出发，设法抽取词语的含义。这给我们一种思路，单纯地考虑如何将某个词的语义映射到向量不太可能实现，那是否可以将词语映射到向量空间之后依然保留词语与词语之间的关系？</li>
+<li>基于统计的词嵌入方法在什么样的任务中可以取得好的结果呢？同样从特征的角度出发，词频向量和TF-IDF向量提取的是词语对文档的重要性特征，什么样的任务需要这种特征呢？比如垃圾邮件识别，一些垃圾邮件一般有经常出现的“垃圾”词语，就可以使用基于统计的词嵌入方法；比如关键词提取，就可以使用TF-IDF。而一些需要复杂语义和句法特征的任务，如机器阅读理解，机器翻译等，就无法使用这些词嵌入方法。</li>
+<li>之前被面试官问到过一个问题：基于统计的词嵌入方法和基于预测的词嵌入方法（如Word2Vec）有什么区别，为什么深度学习中要使用后者。个人观点是，一个方面，基于统计的词嵌入方法一旦在数据确定之后，词的向量便就确定，在不同的NLP任务中都要使用相同的词向量，无法根据不同任务进行调整。而基于预测的词嵌入可以在不同的任务和模型中更新词向量，使词向量逐步地适应这项任务；另一方面则是基于统计的词嵌入方法提取的语义信息实在太少，无法取到比较好的结果。</li>
+</ul>
+<h3 id="4-参考资料"><a href="#4-参考资料" class="headerlink" title="4. 参考资料"></a>4. 参考资料</h3><p><a href="https://www.analyticsvidhya.com/blog/2017/06/word-embeddings-count-word2veec/" target="_blank" rel="noopener">An Intuitive Understanding of Word Embeddings: From Count Vectors to Word2Vec</a></p>
+<p><a href="https://mp.weixin.qq.com/s/iah8PvIC0oZngSaNHw7gJw" target="_blank" rel="noopener">[DM] 都是套路: 从上帝视角看透时间序列和数据挖掘</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/qrcode_for_gh_77389b7acb70_344.jpg" alt="LITD wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎订阅我的个人公众号</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/17/求职指南/" rel="next" title="写给20届毕业生的求职指南">
+                <i class="fa fa-chevron-left"></i> 写给20届毕业生的求职指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/22/BERT2/" rel="prev" title="BERT发展史（二）语言模型">
+                BERT发展史（二）语言模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LITD</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://alberts.top" title="Albert" target="_blank">Albert</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-写在前面"><span class="nav-number">1.</span> <span class="nav-text">0. 写在前面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-机器学习流程"><span class="nav-number">2.</span> <span class="nav-text">1.机器学习流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-词嵌入"><span class="nav-number">3.</span> <span class="nav-text">2. 词嵌入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-词频向量"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 词频向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-TF-IDF向量"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 TF-IDF向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-词共现向量"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 词共现向量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-几点想法"><span class="nav-number">4.</span> <span class="nav-text">3. 几点想法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-参考资料"><span class="nav-number">5.</span> <span class="nav-text">4. 参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LITD</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">30k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点总阅读时间">0:30</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65075154";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '47eQmuKgYYche3zAgF6gkIyu-gzGzoHsz',
+        appKey: 'xw28VLOMDM1rGCyJ8ugPscqQ',
+        placeholder: '请输入您的留言',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("eSgkC6QmJQCnH27znKkYDhzG-gzGzoHsz", "FYRoUbGuyOD80hMHTKHHB4mm");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

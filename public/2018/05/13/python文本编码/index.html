@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="编程语言 编码," />
+
+
+<meta name="description" content="转载请注明出处：Python文本编码  相信大家都碰到过令人头疼的python编码问题，比如：&amp;#39;ascii&amp;#39; codec can&amp;#39;t decode byte UnicodeDecodeError: &amp;#39;utf-8&amp;#39; codec can&amp;#39;t decode byte 0xe9 in position 2892: invalid continuation">
+<meta name="keywords" content="编程语言 编码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 文本编码">
+<meta property="og:url" content="https://zhuyuhe.github.io/2018/05/13/python文本编码/index.html">
+<meta property="og:site_name" content="LITD">
+<meta property="og:description" content="转载请注明出处：Python文本编码  相信大家都碰到过令人头疼的python编码问题，比如：&amp;#39;ascii&amp;#39; codec can&amp;#39;t decode byte UnicodeDecodeError: &amp;#39;utf-8&amp;#39; codec can&amp;#39;t decode byte 0xe9 in position 2892: invalid continuation">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-13T07:08:25.035Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 文本编码">
+<meta name="twitter:description" content="转载请注明出处：Python文本编码  相信大家都碰到过令人头疼的python编码问题，比如：&amp;#39;ascii&amp;#39; codec can&amp;#39;t decode byte UnicodeDecodeError: &amp;#39;utf-8&amp;#39; codec can&amp;#39;t decode byte 0xe9 in position 2892: invalid continuation">
+
+
+
+
+
+
+  <link rel="canonical" href="https://zhuyuhe.github.io/2018/05/13/python文本编码/"/>
+
+
+  <title>Python 文本编码 | LITD</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113128154-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113128154-1');
+</script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LITD</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhuyuhe.github.io/2018/05/13/python文本编码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LITD">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LITD">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 文本编码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T14:58:14+08:00">2018-05-13</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/13/python文本编码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/05/13/python文本编码/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/13/python文本编码/" class="leancloud_visitors" data-flag-title="Python 文本编码">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">5.7k </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">0:06 </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<blockquote>
+<p>转载请注明出处：<br><a href="https://zhuyuhe.github.io/2018/05/13/python%E6%96%87%E6%9C%AC%E7%BC%96%E7%A0%81/">Python文本编码</a></p>
+</blockquote>
+<p>相信大家都碰到过令人头疼的python编码问题，比如：<code>&#39;ascii&#39; codec can&#39;t decode byte</code> <code>UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xe9 in position 2892: invalid continuation byte</code> 等很多类似的问题。由于博主平时使用python处理自然语言比较多，因此少不了与字符串及其编码打交道。每次碰到这种问题，都要去google个半天，然后按网上的解决方案一个一个试，直到解决为止。</p>
+<p>终于有一天，我再也无法忍受这种重复的操作，下定决心一定要把这些问题背后的原因和解决方法搞清楚，于是就有了这片文章。力求搞懂python编码的原理，并总结了常见的问题和解决方案，方便以后查阅。</p>
+<h3 id="1-编码基础"><a href="#1-编码基础" class="headerlink" title="1. 编码基础"></a>1. 编码基础</h3><h4 id="1-1-什么是编码和解码"><a href="#1-1-什么是编码和解码" class="headerlink" title="1.1 什么是编码和解码"></a>1.1 什么是编码和解码</h4><p>首先，我们需要明白，计算机只能处理二进制数字，如果要处理文本，需要把文本转换为二进制数字，然后才能进行处理。</p>
+<p>同样，对于文本，计算机存储的是二进制数字，要想得到文本，需要将二进制数字转化为文本，才能呈现出我们看到的内容。</p>
+<p>也就是说，我们看到的是文本，计算机处理的是二进制数字。这中间肯定是需要来回转换的。从文本到二进制数字就是编码，从二进制数字到文本就是解码。</p>
+<h4 id="1-2-以-ASCII-编码为例"><a href="#1-2-以-ASCII-编码为例" class="headerlink" title="1.2 以 ASCII 编码为例"></a>1.2 以 ASCII 编码为例</h4><p>以我们最熟悉的 ASCII 编码为例，大写字母 <code>A</code> 的编码是 <code>65</code>，小写字母 <code>a</code> 的编码是 <code>97</code>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(<span class="string">'A'</span>.encode(<span class="string">'ascii'</span>))</span><br><span class="line">[<span class="number">65</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(<span class="string">'a'</span>.encode(<span class="string">'ascii'</span>))</span><br><span class="line">[<span class="number">97</span>]</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码意思是将 <code>A</code> 和 <code>a</code> 以 ASCII 编码方式编码后，得到的数字，这里以十进制表示之，换成二进制就是</p>
+<blockquote>
+<p>‘A’ -&gt; 01000001<br>‘a’ -&gt; 01100001</p>
+</blockquote>
+<p>就是说，其实我们看到的上述两个字母，在计算机中，是以上面的二进制形式存储的。当我们需要使用或将字母展示出来的时候，计算机需要将二进制数字转化为字母，这个过程就是解码。</p>
+<p>ASCII 编码是计算机发展早期发明的，当时只将 127 个字符进行了编码（字符到二进制数字的映射），也就是大小写英文字母，数字和一些符号。ASCII 码采用 8 位 bit 进行编码，也就是一个字节，能表示的最大整数就是 255。当处理中文时，255个字符，显然就不够了。</p>
+<h4 id="1-3-中文编码"><a href="#1-3-中文编码" class="headerlink" title="1.3 中文编码"></a>1.3 中文编码</h4><p>要处理中文，一个字节显然是不够的（中文字符数量可远远不止 255 个）。所以，中国制定了 <code>GB2312</code> 编码，使用两个字节来编码中文。两个字节能够表示 65535 个整数，基本上能够囊括所有的汉字了。让我们来看一下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(<span class="string">'中'</span>.encode(<span class="string">'gb2312'</span>))</span><br><span class="line">[<span class="number">214</span>,<span class="number">208</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(<span class="string">'a'</span>.encode(<span class="string">'gb2312'</span>))</span><br><span class="line">[<span class="number">97</span>]</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，<code>GB2312</code> 编码方式不仅可以将中文进行编码，同时兼容 <code>ASCII</code> 码，使用两者对 <code>ASCII</code> 的 127 个字符进行编码得到的结果是相同的。即</p>
+<blockquote>
+<p>‘中’ -&gt; 11010110 11010000<br>‘a’ -&gt; 00000000 01100001</p>
+</blockquote>
+<p>我们常见的 <code>gbk</code> 编码方式，其实就是在 <code>gb2312</code> 编码的基础上，增加了一些中文字符。</p>
+<p>现在，使用 <code>GB2312</code> 编码方式，我们能处理中英文混杂的文本了。那么问题来了，如果一段文本既有中文，又有英文，还有其他语言呢？</p>
+<h4 id="1-4-大统一：unicode-编码"><a href="#1-4-大统一：unicode-编码" class="headerlink" title="1.4 大统一：unicode 编码"></a>1.4 大统一：unicode 编码</h4><p>为每种语言制定一套编码方式实在是太蠢了！为什么不能把所有语言的所有字符一起编码呢？</p>
+<p>把所有语言统一到一套编码里，这套编码就是 unicode 编码。使用 unicode 编码，无论处理什么文本都不会出现乱码问题了。</p>
+<p>unicode 编码使用两个字节（16 位 bit）表示一个字符，比较偏僻的字符需要使用 4 个字节。</p>
+<p>但是新的问题又来了，如果一段纯英文文本，用 <code>unicode</code> 编码存储会比用 <code>ASCII</code> 编码多占用一倍空间！无论是存储还是传输都很浪费！</p>
+<h4 id="1-5-节约小能手：utf-8-编码"><a href="#1-5-节约小能手：utf-8-编码" class="headerlink" title="1.5 节约小能手：utf-8 编码"></a>1.5 节约小能手：utf-8 编码</h4><p>为了改进上述问题，又提出了 <code>utf-8</code> 编码。该编码将一个 unicode 字符编码成 1~6 个字节，常用的英文字母被编码成 1 个字节，汉字通常是 3 个字节，只有很生僻的字符才会被编码成 4~6 个字节。注意，从 unicode 到 utf-8 并不是直接的对应，而是通过一些算法和规则来转换的。 </p>
+<p>来看一下具体编码例子吧：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(<span class="string">'中'</span>.encode(<span class="string">'utf-8'</span>))</span><br><span class="line">[<span class="number">228</span>, <span class="number">184</span>, <span class="number">173</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(<span class="string">'a'</span>.encode(<span class="string">'utf-8'</span>))</span><br><span class="line">[<span class="number">97</span>]</span><br></pre></td></tr></table></figure></p>
+<p>可以看出，<code>utf-8</code> 将汉字 ‘中’ 编码成了三个字节，将英文字母 ‘a’ 编码成了一个字节，且 <code>utf-8</code> 编码兼容 <code>ASCII</code> 编码。</p>
+<h3 id="2-Python编码"><a href="#2-Python编码" class="headerlink" title="2. Python编码"></a>2. Python编码</h3><h4 id="2-1-Python2-or-Python3"><a href="#2-1-Python2-or-Python3" class="headerlink" title="2.1 Python2 or Python3 ?"></a>2.1 Python2 or Python3 ?</h4><p>从上面的知识，我们可以知道，字符的最佳定义应当是 Unicode 字符（存储及传输的时候再转为 utf-8）。</p>
+<p>从 Python3 的 str 对象中获取的元素是 Unicode 字符，这相当于从 Python2 的 unicode 对象中获取的元素。而 Python2 的 str 对象获取的是原始字节序列（相信用过 Python2 的都见过 ‘\xe8\x32\xa6\xb2……’ 这种乱七八糟的字符吧）。</p>
+<p>所以，我们的结论是：</p>
+<blockquote>
+<p>人生苦短，我用Python3</p>
+</blockquote>
+<h4 id="2-2-一个例子"><a href="#2-2-一个例子" class="headerlink" title="2.2 一个例子"></a>2.2 一个例子</h4><p>让我们来结合Python实例来具体看一下编码的应用：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Python3 字符串，为 Unicode 字符</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = <span class="string">'中文'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> sys</span><br><span class="line"><span class="comment"># 查看当前系统默认编码方式（linux）， windows 默认为utf-8</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sys.getfilesystemencoding()</span><br><span class="line"><span class="string">'utf-8'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> open(<span class="string">'test.txt'</span>, <span class="string">'w'</span>, encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">···     f.write(a)</span><br><span class="line">···</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">with</span> open(<span class="string">'/home/zhuyuhe/test.txt'</span>, <span class="string">'r'</span>，encoding = <span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line"><span class="meta">... </span>    print(f.readlines())</span><br><span class="line">...</span><br><span class="line">[<span class="string">'中文'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>上面两个 open 发生了什么的，让我们看一下：</p>
+<p>对于第一个 open 函数，它的执行流程是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[str对象获取 unicode 字符] --&gt;|utf-8 编码| --&gt; [字节序列] --&gt;|二进制形式存储| --&gt; [test.txt]</span><br></pre></td></tr></table></figure></p>
+<p>对于第二个 open 函数，它的执行流程是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[文件中存放的0101...] --&gt;|utf-8 解码| --&gt; [unicode 字符] --&gt; [str 对象]</span><br></pre></td></tr></table></figure></p>
+<p>这里可能会有一点疑问，为什么 unicode 字符可以通过 utf-8 编码成二进制数字，二进制数字通过 utf-8 解码成 unicode 字符。</p>
+<p>前面已经说过，utf-8 是在 unicode 的基础上改进而来，是针对传输和存储而设计的一种编码方式。 utf-8 编码针对的对象是 unicode 字符。</p>
+<p>也就是说，在计算机内存中，统一使用 unicode 编码，当需要保存到硬盘或者需要传输的时候，就转换为 utf-8 编码。</p>
+<h4 id="2-3-另一个例子"><a href="#2-3-另一个例子" class="headerlink" title="2.3 另一个例子"></a>2.3 另一个例子</h4><p>如果我们使用记事本打开上一小节保存的 <code>test.txt</code> 呢，这中间发生了什么呢？</p>
+<p>让我们同样用流程图来看一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[在计算机硬盘以0101...形式存放的文件] --&gt; |记事本所使用的编码方式|--&gt; B[我们看到的字符]</span><br></pre></td></tr></table></figure>
+<p>我们的 <code>test.txt</code> 是以 utf-8 的编码方式保存的，如果记事本使用的编码方式为 <code>gb2312</code>，打开该文件时，记事本会尝试以 <code>gb2312</code> 的方式解码该文件的字节序列（二进制数字），由于两者的字符与字节对应关系不同，当然会解码失败。此时记事本会显示各种乱码。这个过程类似下面的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'中文'</span>.encode(<span class="string">'utf-8'</span>).decode(<span class="string">'gbk'</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">UnicodeDecodeError: <span class="string">'gbk'</span> codec can<span class="string">'t decode byte 0xad in position 2: illegal multibyte sequence</span></span><br></pre></td></tr></table></figure>
+<p>如果碰到上述问题，可以尝试使用 <a href="https://notepad-plus-plus.org/" target="_blank" rel="noopener">notepad++</a> 打开该文件，尝试改变编辑器的编码方式，来尝试是否能正常打开文件。</p>
+<p>是的，只能去尝试。因为在没有任何信息的情况下，给我们一串字节序列，我们是不知道它的编码方式的。</p>
+<p>所以，在平时的文件存储和传输中，统一编码方式是很重要的。</p>
+<h4 id="2-4-统一编码"><a href="#2-4-统一编码" class="headerlink" title="2.4 统一编码"></a>2.4 统一编码</h4><p>在日常的使用中，避免乱码的重要方式就是统一你的编码方式。</p>
+<p>一般我们将编码方式统一为 utf-8，下面给出了一些参考的建议：</p>
+<ol>
+<li><p>linux 使用 Python 时，可以使用如下代码查看默认编码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> sys</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sys.getfilesystemencoding()</span><br></pre></td></tr></table></figure>
+<p>查看是否为 utf-8，如果不是，改成 utf-8。</p>
+</li>
+<li>windows 默认编码方式为 utf-8，不需要修改</li>
+<li>在使用 open 函数及其他读写函数时，加上 <code>encoding=utf-8</code>，确保文件以 utf-8 方式编码和解码。</li>
+<li>使用远程连接软件时，比如 XShell 或 MobaXterm ，将软件的编码选为 utf-8，这样可以保证远程连接显示正常。</li>
+<li>不要依赖系统的默认编码，打开文件时应始终明确传入 encoding = 参数，因为不同设备使用的默认编码不同，即使是同一设备，也可能会发生变化。</li>
+</ol>
+<p>其实，理解了为何需要做上述处理，也基本就理解了编码。碰到编码问题，结合错误信息，基本上就能很快找出发生错误的原因了。不过为了方便起见，我还是将常见的问题总结了下。</p>
+<h3 id="3-常见问题原因及解决方案"><a href="#3-常见问题原因及解决方案" class="headerlink" title="3. 常见问题原因及解决方案"></a>3. 常见问题原因及解决方案</h3><h4 id="3-1-UnicodeEncodeError"><a href="#3-1-UnicodeEncodeError" class="headerlink" title="3.1 UnicodeEncodeError"></a>3.1 UnicodeEncodeError</h4><p>多数非 UTF 编码器只能处理 Unicode 字符的一小部分子集。把文本转换为字节序列时，如果目标编码中没有定义某个字符，就会抛出 UnicodeEncodeError 异常。</p>
+<p>看个例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'中文'</span>.encode(<span class="string">'ascii'</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">UnicodeEncodeError: <span class="string">'ascii'</span> codec can<span class="string">'t encode characters in position 0-1: ordinal not in range(128)</span></span><br></pre></td></tr></table></figure></p>
+<p>当我们尝试将中文字符以 ASCII 方式编码时，报出了 UnicodeEncodeError。这个原因很明显，ASCII 编码方式并没有定义中文字符，无法对中文字符进行编码。</p>
+<p>碰到这种问题，可以使用 errors 参数进行处理：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'中文'</span>.encode(<span class="string">'ascii'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"><span class="string">b''</span></span><br></pre></td></tr></table></figure></p>
+<p>我们将错误的编码忽略掉，最后得到空的字节序列。通常，这样做是非常不妥的。</p>
+<p>errors 参数还有许多可选项，大家可以自行探索。</p>
+<p>比较妥当的解决方案，当然是选择合适的编码方式。这个需要根据具体情况而定，相信，理解了这个错误发生的原因，解决起来就很轻松啦！</p>
+<h4 id="3-2-UnicodeDecodeError"><a href="#3-2-UnicodeDecodeError" class="headerlink" title="3.2 UnicodeDecodeError"></a>3.2 UnicodeDecodeError</h4><p>不是每一个字节都包含有有效的 ASCII 字符，也不是每一个字符序列都是有效的 utf-8 。因此把二进制序列转换为文本时，遇到无法转换的字节序列就会抛出 UnicodeDecodeError。</p>
+<p>看个例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = <span class="string">b'\xe4\xb8\xad\xe6\x96\x87'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.decode(<span class="string">'ascii'</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">UnicodeDecodeError: <span class="string">'ascii'</span> codec can<span class="string">'t decode byte 0xe4 in position 0: ordinal not in range(128)</span></span><br></pre></td></tr></table></figure></p>
+<p>b 是字符 ‘中文’ 以 utf-8 方式编码形成的字节序列，属于 Python3 中的 bytes 类型。将该字节序列以 ASCII 方式解码时抛出了 UnicodeDecodeError。</p>
+<h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h3><p>本文详细阐述了编码的原理及各种问题发生的原因，相信搞懂这些，以后碰到编码问题就再也不用求助 Google 了。知道了问题发生的原因，我们自己就能迅速解决了！</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431664106267f12e9bef7ee14cf6a8776a479bdec9b9000" target="_blank" rel="noopener">廖雪峰的官方网站-字符串和编码</a><br><a href="http://www.10tiao.com/html/506/201803/2651615541/1.html" target="_blank" rel="noopener">大道至简：史上最易懂的『乱码』解决方案</a><br>《流畅的Python》</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/qrcode_for_gh_77389b7acb70_344.jpg" alt="LITD wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎订阅我的个人公众号</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/编程语言-编码/" rel="tag"># 编程语言 编码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/21/浅谈逻辑斯蒂回归/" rel="next" title="机器学习算法系列（1）- 逻辑斯蒂回归">
+                <i class="fa fa-chevron-left"></i> 机器学习算法系列（1）- 逻辑斯蒂回归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/20/服务器配置指南/" rel="prev" title="深度学习服务器完整配置指南">
+                深度学习服务器完整配置指南 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">LITD</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://alberts.top" title="Albert" target="_blank">Albert</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-编码基础"><span class="nav-number">1.</span> <span class="nav-text">1. 编码基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-什么是编码和解码"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是编码和解码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-以-ASCII-编码为例"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 以 ASCII 编码为例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-中文编码"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 中文编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-大统一：unicode-编码"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 大统一：unicode 编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-节约小能手：utf-8-编码"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 节约小能手：utf-8 编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Python编码"><span class="nav-number">2.</span> <span class="nav-text">2. Python编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Python2-or-Python3"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Python2 or Python3 ?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-一个例子"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 一个例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-另一个例子"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 另一个例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-统一编码"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 统一编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-常见问题原因及解决方案"><span class="nav-number">3.</span> <span class="nav-text">3. 常见问题原因及解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-UnicodeEncodeError"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 UnicodeEncodeError</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-UnicodeDecodeError"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 UnicodeDecodeError</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-总结"><span class="nav-number">4.</span> <span class="nav-text">4 总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LITD</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">30k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点总阅读时间">0:30</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65075154";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '47eQmuKgYYche3zAgF6gkIyu-gzGzoHsz',
+        appKey: 'xw28VLOMDM1rGCyJ8ugPscqQ',
+        placeholder: '请输入您的留言',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("eSgkC6QmJQCnH27znKkYDhzG-gzGzoHsz", "FYRoUbGuyOD80hMHTKHHB4mm");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
