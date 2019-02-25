@@ -100,31 +100,38 @@
 
 
   
-  <meta name="keywords" content="求职," />
+  <meta name="keywords" content="BERT NLP," />
 
 
-<meta name="description" content="0.写在前面记得去年的这个时候，我还在为求职感到迷茫。这份迷茫，一部分原因是对自己能力和定位认知的不足，还有一部分原因是对即将到来的春招和秋招所知甚少。为此，也咨询了一些师兄师姐，提前获取了一些资讯。如今，经过2018年春招、实习和秋招的洗礼，再回头看，一些信息和注意点已经变得显而易见。但我相信20届毕业生，和去年的我一样，对于即将到来的求职季充满了迷茫。 因此，我写这篇文章，主要是梳理一下整个">
-<meta name="keywords" content="求职">
+<meta name="description" content="建议先阅读之前两篇文章： BERT发展史（一）从词嵌入讲起 BERT发展史（二）语言模型 0. 写在前面在上一篇介绍的神经网络语言模型中，我们训练模型的目标是得到一个泛化能力强、无需平滑的语言模型，而词向量只是我们在训练语言模型过程中的一个副产物，这个副产物可以起到词嵌入的作用，将语料库中的词语映射为一个个的向量，且向量能够表征一定的语义信息。那么，从词嵌入的角度出发，我们是否可以使用这个模型专">
+<meta name="keywords" content="BERT NLP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="写给20届毕业生的求职指南">
-<meta property="og:url" content="https://zhuyuhe.github.io/2019/01/17/求职指南/index.html">
+<meta property="og:title" content="BERT发展史（三）全方位多角度理解Word2Vec">
+<meta property="og:url" content="https://zhuyuhe.github.io/2019/02/25/BERT3/index.html">
 <meta property="og:site_name" content="LITD">
-<meta property="og:description" content="0.写在前面记得去年的这个时候，我还在为求职感到迷茫。这份迷茫，一部分原因是对自己能力和定位认知的不足，还有一部分原因是对即将到来的春招和秋招所知甚少。为此，也咨询了一些师兄师姐，提前获取了一些资讯。如今，经过2018年春招、实习和秋招的洗礼，再回头看，一些信息和注意点已经变得显而易见。但我相信20届毕业生，和去年的我一样，对于即将到来的求职季充满了迷茫。 因此，我写这篇文章，主要是梳理一下整个">
+<meta property="og:description" content="建议先阅读之前两篇文章： BERT发展史（一）从词嵌入讲起 BERT发展史（二）语言模型 0. 写在前面在上一篇介绍的神经网络语言模型中，我们训练模型的目标是得到一个泛化能力强、无需平滑的语言模型，而词向量只是我们在训练语言模型过程中的一个副产物，这个副产物可以起到词嵌入的作用，将语料库中的词语映射为一个个的向量，且向量能够表征一定的语义信息。那么，从词嵌入的角度出发，我们是否可以使用这个模型专">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-16T16:30:07.205Z">
+<meta property="og:image" content="https://zhuyuhe.github.io/2019/02/25/BERT3/image-20190202181209675.png">
+<meta property="og:image" content="https://zhuyuhe.github.io/2019/02/25/BERT3/image-20190202192509944.png">
+<meta property="og:image" content="https://zhuyuhe.github.io/2019/02/25/BERT3/image-20190225143829720.png">
+<meta property="og:image" content="https://zhuyuhe.github.io/2019/02/25/BERT3/image-20190225144024710.png">
+<meta property="og:image" content="https://zhuyuhe.github.io/2019/02/25/BERT3/image-20190225163936583.png">
+<meta property="og:image" content="https://zhuyuhe.github.io/2019/02/25/BERT3/image-20190225194912817.png">
+<meta property="og:updated_time" content="2019-02-25T13:46:44.910Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="写给20届毕业生的求职指南">
-<meta name="twitter:description" content="0.写在前面记得去年的这个时候，我还在为求职感到迷茫。这份迷茫，一部分原因是对自己能力和定位认知的不足，还有一部分原因是对即将到来的春招和秋招所知甚少。为此，也咨询了一些师兄师姐，提前获取了一些资讯。如今，经过2018年春招、实习和秋招的洗礼，再回头看，一些信息和注意点已经变得显而易见。但我相信20届毕业生，和去年的我一样，对于即将到来的求职季充满了迷茫。 因此，我写这篇文章，主要是梳理一下整个">
+<meta name="twitter:title" content="BERT发展史（三）全方位多角度理解Word2Vec">
+<meta name="twitter:description" content="建议先阅读之前两篇文章： BERT发展史（一）从词嵌入讲起 BERT发展史（二）语言模型 0. 写在前面在上一篇介绍的神经网络语言模型中，我们训练模型的目标是得到一个泛化能力强、无需平滑的语言模型，而词向量只是我们在训练语言模型过程中的一个副产物，这个副产物可以起到词嵌入的作用，将语料库中的词语映射为一个个的向量，且向量能够表征一定的语义信息。那么，从词嵌入的角度出发，我们是否可以使用这个模型专">
+<meta name="twitter:image" content="https://zhuyuhe.github.io/2019/02/25/BERT3/image-20190202181209675.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://zhuyuhe.github.io/2019/01/17/求职指南/"/>
+  <link rel="canonical" href="https://zhuyuhe.github.io/2019/02/25/BERT3/"/>
 
 
-  <title>写给20届毕业生的求职指南 | LITD</title>
+  <title>BERT发展史（三）全方位多角度理解Word2Vec | LITD</title>
   
 
 
@@ -311,7 +318,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhuyuhe.github.io/2019/01/17/求职指南/">
+    <link itemprop="mainEntityOfPage" href="https://zhuyuhe.github.io/2019/02/25/BERT3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LITD">
@@ -328,7 +335,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">写给20届毕业生的求职指南</h1>
+          <h1 class="post-title" itemprop="name headline">BERT发展史（三）全方位多角度理解Word2Vec</h1>
         
 
         <div class="post-meta">
@@ -340,7 +347,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-17T00:21:22+08:00">2019-01-17</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T21:08:17+08:00">2019-02-25</time>
             
 
             
@@ -358,8 +365,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/01/17/求职指南/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/17/求职指南/" itemprop="commentCount"></span>
+                <a href="/2019/02/25/BERT3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/02/25/BERT3/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -367,7 +374,7 @@
 
           
           
-             <span id="/2019/01/17/求职指南/" class="leancloud_visitors" data-flag-title="写给20届毕业生的求职指南">
+             <span id="/2019/02/25/BERT3/" class="leancloud_visitors" data-flag-title="BERT发展史（三）全方位多角度理解Word2Vec">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -392,7 +399,7 @@
                 
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
-                <span title="字数统计">2.7k </span>
+                <span title="字数统计">9.2k </span>
               
 
               
@@ -406,7 +413,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">0:03 </span>
+                <span title="阅读时长">0:09 </span>
               
             </div>
           
@@ -427,36 +434,165 @@
 
       
         <a id="more"></a>
-<h3 id="0-写在前面"><a href="#0-写在前面" class="headerlink" title="0.写在前面"></a>0.写在前面</h3><p>记得去年的这个时候，我还在为求职感到迷茫。这份迷茫，一部分原因是对自己能力和定位认知的不足，还有一部分原因是对即将到来的春招和秋招所知甚少。为此，也咨询了一些师兄师姐，提前获取了一些资讯。如今，经过2018年春招、实习和秋招的洗礼，再回头看，一些信息和注意点已经变得显而易见。但我相信20届毕业生，和去年的我一样，对于即将到来的求职季充满了迷茫。</p>
-<p>因此，我写这篇文章，主要是梳理一下整个求职季的环节、时间节点和注意事项等。希望能帮助20届毕业生提前窥视求职季全貌，从而在整个求职时间线上把控求职进度。</p>
-<h3 id="1-春招"><a href="#1-春招" class="headerlink" title="1. 春招"></a>1. 春招</h3><p>其实春招的面向人群是19届毕业生和20届毕业生。对于前者是招募正式员工，对于后者则是招募具备转正资格的暑期实习生。</p>
-<h4 id="1-1-时间节点"><a href="#1-1-时间节点" class="headerlink" title="1.1 时间节点"></a>1.1 时间节点</h4><p>其实现在互联网行业的招聘越来越提前，比如vivo一月份就开启了春招、六月份就开启了秋招。但普遍来说，大规模的春招集中在三四月份，并一直持续到六月份。从时间上来说，建议2月底左右就要开始关注春招信息和准备投递简历了。如果前期结果不理想，也不要放弃，春招会持续到六月份，机会依然很多。</p>
-<h4 id="1-2-信息渠道"><a href="#1-2-信息渠道" class="headerlink" title="1.2 信息渠道"></a>1.2 信息渠道</h4><p>关于综合性渠道：前几年听师兄师姐介绍求职经验的时候，说的比较多的求职渠道还是应届生网和大街网这种求职网站，不过我身边用这些的好像很少。大家用的比较多的还是一些求职类公众号，毕竟每天用微信，公众号接收信息还是比较方便的。这里推荐一个公号【校招薪水】，是我一个学长运营的，推荐关注。对了，求职季有一些公众号会推出一些转发拉群的活动，建议别浪费时间转发了，没啥用。</p>
-<p>关于单一渠道：就是各个公司的官网和招聘公众号了，比如【腾讯招聘】、【拼多多招聘】公众号之类的。这些渠道的优点是信息推送非常及时，能让你第一时间知晓各公司开启招聘渠道的时间节点。</p>
-<p>关于抱团：就是求职者们聚在一起共享信息，互帮互助，建议大家都找到自己的小团体哦。<del>无团可抱的非科班程序猿本猿只得自己拉群了</del></p>
-<h4 id="1-3-关于内推"><a href="#1-3-关于内推" class="headerlink" title="1.3 关于内推"></a>1.3 关于内推</h4><p>先说一下内推的流程吧，候选人找到目标公司的内推人-一般是公司正式员工或实习生，内推人将候选人的简历提交到公司简历池当中，各个部门各个组长会去简历池中筛选简历，相中某个简历后，组长将该简历锁定，然后发起面试；面试通过进入offer流程，不通过则解锁简历，可以继续被捞起面试。</p>
-<p>大部分公司都有内推渠道，但各个公司对待内推简历的态度不同。比如阿里，基本上就是上述流程，内推可以免去笔试，直达面试（当然首先要有人相中你的简历）。再比如字节跳动，内推也只是面去简历筛选而已，依然要参加笔试。</p>
-<p>内推最大的好处就是获得了一枚复活币，增加了一次投递机会。也就是说，内推失败依然可以参加正式批招聘。不过有些公司如阿里腾讯，对于每一次面试都会有记录，一次失败记录可能会影响正式批面试官的评价，所以，一定要谨慎对待内推，做好充分准备再去面试。</p>
-<p>关于内推人，尽可能选择比较熟的师兄师姐，避免选择网上公开发布的内推信息。后者一般是内部员工为了内推奖励而发布的信息，内推量巨大，很可能就遗漏了个别人的内推，而你又无法联系上他们，会白白浪费很多时间（我的血泪教训）。</p>
-<h4 id="1-4-关于暑期实习offer选择"><a href="#1-4-关于暑期实习offer选择" class="headerlink" title="1.4 关于暑期实习offer选择"></a>1.4 关于暑期实习offer选择</h4><p>最好的当然是能去自己目标城市的目标公司，然后最好的结果是顺利转正留下！但是！相信很多人和我一样…并没有想好目标城市或者目标公司。那这个时候，个人建议选择越大的公司越好（其他因素相差不是很大的情况下）。毕竟暑期实习的最终目标是正式工作，即使不能留任，一份大公司的实习是非常为简历增色的，能够有效帮助到自己的秋招。</p>
-<h3 id="2-实习和秋招"><a href="#2-实习和秋招" class="headerlink" title="2. 实习和秋招"></a>2. 实习和秋招</h3><h4 id="2-1-暑期实习"><a href="#2-1-暑期实习" class="headerlink" title="2.1 暑期实习"></a>2.1 暑期实习</h4><p>这里每个人去的公司和状态都不同，我只想说一点，就是实习秋招要兼顾。平时完成实习任务的额外时间，也要给自己留条后路，同时为秋招做准备。</p>
-<p>针对暑期实习，企业的目的是为了考察候选人，而我们的目的则是通过暑期实习留用或者为自己的简历增色从而找到更好的工作。无论你的目的是前者还是后者，都建议在尽量争取转正的同时，进行秋招的“广撒网”。注意，我这里的情况只是针对广大人民群众，不包括很牛的人（这些人也不需要看我这篇拙文…..）。</p>
-<p>如果你的目的是实习留用，并且成功地留了下来，我的看法是，依然继续参加秋招。原因有如下几点：</p>
+<p>建议先阅读之前两篇文章：</p>
+<p><a href="">BERT发展史（一）从词嵌入讲起</a></p>
+<p><a href="">BERT发展史（二）语言模型</a></p>
+<h4 id="0-写在前面"><a href="#0-写在前面" class="headerlink" title="0. 写在前面"></a>0. 写在前面</h4><p>在上一篇介绍的神经网络语言模型中，我们训练模型的目标是得到一个泛化能力强、无需平滑的语言模型，而词向量只是我们在训练语言模型过程中的一个副产物，这个副产物可以起到词嵌入的作用，将语料库中的词语映射为一个个的向量，且向量能够表征一定的语义信息。那么，从词嵌入的角度出发，我们是否可以使用这个模型专门用于将词语转换为向量呢？可以当然是可以，不过有以下问题需要考虑：</p>
+<blockquote>
 <ol>
-<li><p>放弃秋招意味着放弃了更多机会。可能你觉得当前这个offer已经很满意了，但其实可能还有更好的机会可供选择。多试试，不要给自己留遗憾。</p>
+<li>语言模型由于其任务限制，只能使用前面的词语来预测当前词，缺少后面词语的上下文信息。</li>
+<li>模型的最后一层softmax层计算非常耗时。</li>
+</ol>
+</blockquote>
+<p>因此，如果要使用神经网络来实现词嵌入，我们需要对神经网络语言模型进行一定的改进。接下来，就让我们看看Word2Vec是如何解决以上问题的。</p>
+<p>PS. 关于Word2Vec的代码和数学推导，网上以及文末的参考资料中都要非常好且详细的介绍，这篇文章并不想重复前人工作，因此，本文在基本概念之外，也加入了许多理解性的东西（如对语义如何建模到向量中的理解，词向量维度的理解等），希望能够起到参考价值。</p>
+<h4 id="1-Word2Vec概览"><a href="#1-Word2Vec概览" class="headerlink" title="1. Word2Vec概览"></a>1. Word2Vec概览</h4><p>Word2Vec并非指一个模型，而是2013年Google开源的一个获取词向量的工具包，由于简单高效，大大降低了词向量在工业界的应用门槛。我们先来看下Word2Vec能够取得的效果：</p>
+<blockquote>
+<ol>
+<li>相似词：通过向量间距离的远近来寻找相似词，如man的相似词woman；</li>
+<li>词语线性运算：V(King) - V(man) + V(woman) = V(Queen)</li>
+</ol>
+</blockquote>
+<p>由此可见，Word2Vec可以通过上下文将语义较好的嵌入到向量空间中。由于Word2Vec生成的词向量将自然语言的特征较好地融合进了低维度稠密词向量中，使用词向量进行后续的各种NLP任务便可以取得较好的结果。</p>
+<p>Word2Vec本身的模型结构是比较简单的，但模型结构以外有许多需要理解的内容，对Word2Vec的理解可以帮助我们更好地调节深度学习模型参数，更好地理解包括BERT在内的后续各个模型。要理解Word2Vec，我们主要需要了解其中的四个概念：</p>
+<blockquote>
+<ol>
+<li>CBOW</li>
+<li>Skip-gram</li>
+<li>Hierarchical softmax</li>
+<li>Negative Sampling</li>
+</ol>
+</blockquote>
+<p>其中，前两个代表Word2Vec中两种不同的获取词向量的策略，或者说模型结构；后两个则是两种改进softmax计算复杂度过高问题的方法。</p>
+<p>这篇文章将对以上四个概念进行深入剖析，之后将给出对Word2Vec如何建模语义信息的理解和对词向量维度的理解。</p>
+<h4 id="2-CBOW-amp-Skip-gram"><a href="#2-CBOW-amp-Skip-gram" class="headerlink" title="2. CBOW &amp; Skip-gram"></a>2. CBOW &amp; Skip-gram</h4><p>首先，与语言模型只使用当前词前面的词语不同，我们将使用当前词周围的词来建模词向量。其次，要明确的是，CBOW和Skip-gram都是使用浅层的神经网络，他们的区别在于输入和输出的不同。</p>
+<p><strong>CBOW：以当前词的周围词语作为输入，当前词作为输出。即上下文预测当前词。</strong></p>
+<p><strong>Skip-gram：以当前词作为输入，当前词的周围词作为输出。即当前词预测上下文。</strong></p>
+<h5 id="2-1-CBOW"><a href="#2-1-CBOW" class="headerlink" title="2.1 CBOW"></a>2.1 CBOW</h5><p>CBOW使用当前词周围的词语来预测当前词，所谓周围词，既包括前面的词语，也包括后面的词语。至于取前后几个词语，由Context window指定。</p>
+<p>还是举例子🌰来说明：</p>
+<p>我们有一个句子：“知识改变命运”。分词为[“知识”, “改变”, “命运”]。构造词表为{0: <pad>, 1: 知识, 2: 改变, 3: 命运}。其中，<pad>是自己构造的一个「填充词」。</pad></pad></p>
+<p>使用CBOW的方法，取Context window=1，构造样本为：</p>
+<blockquote>
+<p><pad>, 改变  —&gt; 知识</pad></p>
+<p>知识，命运 —&gt; 改变</p>
+<p>改变，<pad> —&gt; 命运</pad></p>
+</blockquote>
+<p>接下来，和神经网络语言模型一样，我们为词表中的每个词语分配一个随机初始化的词向量（瞎编的数字😁）：</p>
+<script type="math/tex; mode=display">
+\left[
+\begin{matrix}
+0.02 & 0.32 & -0.15 \\
+0.51 & -0.75 & 0.64 \\
+0.08 & 0.68 & -0.9 \\
+0.21 & 0.05 & 0.84 \\
+\end{matrix}
+\right]\tag{1}</script><p>其中，矩阵的第一行为词表中序号为0的词语的词向量，以此类推。<strong>注意，我们最终的目标并不是得到一个神经网络模型，而是得到更新后的词向量矩阵。</strong></p>
+<p>为了方便起见，我们先从一个上下文词语预测当前词开始，比如使用「知识」这个词去预测「改变」。神经网络的输入为知识这个词的词向量，输出为预测词表中的所有词出现的概率。目标是最大化「改变」这个词出现的概率，即P(改变|知识)。其结构如下图所示（画功拙劣，凑活着看吧～👀）：</p>
+<p><img src="/2019/02/25/BERT3/image-20190202181209675.png" alt="image-20190202181209675"></p>
+<center>图一</center>
+
+<p>这里其实就是一个单层的全连接层神经网络，不过我没有按普通的神经网络那样画（画成这样是由于后面需要～）。由于一层全连接神经网络其实就是一次矩阵运算，所以我这里画成了向量与矩阵的运算形式。W就是前面初始化的词向量矩阵，W到$w_1$这里，是「取」知识这个词的词向量的过程；W’是神经网络的权重矩阵，我这里画成了四个列向量(其实这四个列向量也可以看作是四个词语的词向量，W叫输入词向量，W’叫做输出词向量。一般使用输入词向量。)；最后的结果是$w_1​$与四个列向量做内积得到的值组成的输出向量。</p>
+<p>最后的输出向量做一次softmax运算，就可以得到词表中四个词语的概率了。然后针对损失函数使用反向传播进行优化就行了。</p>
+<p>需要注意的是，在这个神经网络的训练过程中，需要更新的参数不只是其权重矩阵W’，还有其输入$w_1$。</p>
+<p>再来看「知识」和「命运」预测「改变」的情况，结构图如下：</p>
+<p><img src="/2019/02/25/BERT3/image-20190202192509944.png" alt="image-20190202192509944"></p>
+<center>图二</center>
+
+<p>和上面那张图的差异在于输入。当两个上下文词语预测当前词时，神经网络的输入为「知识」和「命运」这两个词语的词向量的平均。之后的过程就一样了。注意，使用这个样本训练过程中，更新的参数为神经网络的权重矩阵W’和两个词向量$w_1$和$w_3$。</p>
+<p>以上就是CBOW得到词向量的策略了，主要就是利用单层神经网络使用上下文预测当前词。</p>
+<p>有了以上基础，再看Skip-gram就简单明了了。</p>
+<h5 id="2-2-Skip-gram"><a href="#2-2-Skip-gram" class="headerlink" title="2.2 Skip-gram"></a>2.2 Skip-gram</h5><p>skip-gram以当前词作为输入，当前词的上下文词语作为输出。这个策略在构造样本时有两个概念需要清楚，一个是skip_window，类似于CBOW的context_window，用于指定选取上下文时的单侧窗口大小；另一个是num_skips，表示我们将从上下文窗口中选取几个词作为label。</p>
+<p>同样还是「知识改变命运」这个例子，以skip_window=1, num_skips=2构造以下样本(这里我没有构造填充词)：</p>
+<blockquote>
+<p>改变—&gt; 知识</p>
+<p>改变—&gt;命运</p>
+</blockquote>
+<p>有了输入和输出，接下来的训练方式就是正常的神经网络的训练了。</p>
+<p>实际实现过程中，有一些需要注意的点。</p>
+<blockquote>
+<ol>
+<li><p>以上面例子为例，构造样本时，若num_skips=1，我们需要在窗口的两个词中取一个作为label；取词的方式为随机取一个，这里的随机并不是等概率随机，而是词频越高概率越高。</p>
 </li>
-<li><p>准备秋招也是巩固基础，快速进步的一段时间。毕竟，有目标，有动力，又有面试官帮助你复习和答疑，这种机会真的不多。</p>
-</li>
-<li><p>和不同公司不同职级的面试官交流，能够让你更加了解自己所在的行业以及自己所从事的方向在行业中的应用场景。虽然小编是做技术的，但我一直认为对整个行业的动向还是要有了解的。往大了说，这其实就是一个人的行业格局问题。在自己面临选择时，这种格局能够帮助自己做出更加正确的选择。</p>
+<li><p>上面的例子看起来是构造了两个样本，但在实际训练过程中，这两个样本共同组成一个样本用于计算损失函数:</p>
+<script type="math/tex; mode=display">E=-log(P(知识，命运|改变)) = -(log(P(知识|改变) * P(命运|改变)) = -(log(P(知识|改变) + log(P(命运|改变)))</script><p> 从极大似然估计的角度来看，我们要最大化P(知识|改变)和P(命运|改变)的乘积。由于加了log，乘积的形式变成了相加的形式。这等价于两个子样本组成一个batch计算损失函数。如果你读过word2vec的源码的话，你会发现，skip-gram在构造样本时，并非是将CBOW中的（[知识，命运]，改变）翻转为（改变，[知识，命运]），而是构造了两个样本：（改变，知识），（改变，命运）。实际运算时，只需要将上述样本放在同一个batch里面就行了。这也是为什么代码里需要保证batch_size % num_skips == 0。</p>
 </li>
 </ol>
-<p>如果你的目的是找到更好的工作，那就更不用说了，多去试吧！</p>
-<h4 id="2-2-时间节点"><a href="#2-2-时间节点" class="headerlink" title="2.2 时间节点"></a>2.2 时间节点</h4><p>都说“金9银10”，好像现在已经过时了。秋招最早在六月份就已经开始了！<del>（是的，又是那个vivo）</del> 七月中旬到八月底，会有一大批提前批招聘开启。注意，提前批很重要！很重要！之前和同学讨论，有许多人后悔提前批没有多投一些，导致正式批的时候hc（head count，坑位）大大减少，许多hc都被提前批的同学给占了。所以，建议一定要重视提前批，争取在提前批能够拿下一些重量级offer，这样秋招会轻松很多。</p>
-<h4 id="2-3-信息渠道和内推"><a href="#2-3-信息渠道和内推" class="headerlink" title="2.3 信息渠道和内推"></a>2.3 信息渠道和内推</h4><p>见1.2和1.3</p>
-<h4 id="2-4-薪资谈判"><a href="#2-4-薪资谈判" class="headerlink" title="2.4 薪资谈判"></a>2.4 薪资谈判</h4><p>写到这里，悲催的发现我好像从来没有谈判过薪资。<del>突然有点后悔(〒︿〒)</del>。 不过没吃过猪肉，还是见过很多猪跑的。所谓薪资谈判，就是比如你有阿里和腾讯的offer，可以拿着阿里的offer去和腾讯说我要加薪（当然过程可能没这么简单粗暴）。</p>
-<p>建议谈薪适度即可。见过一个骚操作，有人拿阿里offer和腾讯谈薪，然后又拿腾讯谈完的薪资去和阿里谈薪.（类似于左脚踩右脚，右脚踩左脚然后想上天？）…..不知道那位仁兄怎样了。</p>
-<p>还见过一个公司，就不提名字了，为了挽留候选人-我们群里的一位同学，慢慢一步步加薪，最后相比原offer加了6k（月薪）。虽然最后薪资非常可观，但我们都认为这家公司去不得。后面进行大幅度加薪，说明原本给的薪资是压价非常严重的，而且是一步步慢慢加薪，说明这家公司格局太小，去不得。</p>
-<h4 id="2-5-offer选择"><a href="#2-5-offer选择" class="headerlink" title="2.5 offer选择"></a>2.5 offer选择</h4><p>正式offer选择不同于实习offer选择，要考虑的因素太多。可以参考我之前的offer选择文章。</p>
+</blockquote>
+<p>另外，关于CBOW和Skip-gram的表述，你可能看到比较多的是以下两幅图：</p>
+<div align="center">
+<img src="/2019/02/25/BERT3/image-20190225143829720.png" height="400px" alt="CBOW">
+<img src="/2019/02/25/BERT3/image-20190225144024710.png" height="400px" alt="Skip-gram">
+</div>
+
+<center>图三</center>
+
+<p>看起来比我前面画的神经网络多了一层，但其实是一样的。这两幅图将「取」词向量这一步作为了神经网络的第一层，使用词语的one-hot编码（即上图中的输入层）与词向量矩阵（即上图中第一层的权重矩阵）相乘，其实就是取词向量矩阵中，词语编号对应的那一行。</p>
+<h5 id="2-3-比较"><a href="#2-3-比较" class="headerlink" title="2.3 比较"></a>2.3 比较</h5><p>根据Word2Vec作者Mikolov的说法，两者的比较如下：</p>
+<blockquote>
+<p><strong>Skip-gram:</strong> works well with small amount of the training data, represents well even rare words or phrases. <strong>CBOW:</strong> several times faster to train than the skip-gram, slightly better accuracy for the frequent words.</p>
+</blockquote>
+<p>这里给出我对以上比较的理解。</p>
+<blockquote>
+<p>关于训练集大小：Skip-gram在数据集较小时能取得更好的效果；原因我认为有两点：1. 数据集较小时，低频词较多，Skip-gram对低频词的表示效果较好（原因后面会说）；2. 同样的语料库，Skip-gram能产生更多(子)样本。</p>
+<p>关于训练速度：CBOW训练速度更快。这是因为，一个batch中，CBOW包含batch_size个中心词样本，Skip-gram包含batch_size/num_skips个中心词样本，同样的batch_size遍历一次样本集，CBOW需要更少的step。</p>
+<p>关于低频高频词的表示效果：Skip-gram对低频词的表示效果优于CBOW，CBOW对高频词的表示效果略优于Skip-gram。原因的话，我从两个方面进行阐述：1. 直观上来理解，CBOW通过上下文预测中心词，如知识___命运，类似于完形填空，选择概率最高的一个词填入其中，这就要求词向量对于概率最高的那些词有足够的「理解」；而Skip-gram则是根据中心词填周围的词，如___改变___，要在中心词周围填词，词向量需要对该词有足够的「理解」才能填词，包括低频词。2. 从反向传播更新词向量的角度来看，在反向传播更新词向量时，CBOW使用相同的梯度更新所有输入词向量，如对于（[知识，命运]，改变）这个样本，知识和命运的词向量使用同样的梯度进行更新，这就使得低频词的词向量更新被高频词「平滑」掉了。而Skip-gram则不存在这个问题。</p>
+</blockquote>
+<h4 id="3-Trick"><a href="#3-Trick" class="headerlink" title="3. Trick"></a>3. Trick</h4><p>到了这里，其实就不属于模型结构介绍的范畴了，这一块主要是为了加速模型训练，使模型能够应用于大规模语料库。</p>
+<p>首先看一下为什么softmax层这么费时。</p>
+<p>softmax的公式如下：</p>
+<script type="math/tex; mode=display">\sigma ( \mathbf { z } ) _ { j } = \frac { e ^ { z _ { j } } } { \sum _ { k = 1 } ^ { K } e ^ { z _ { k } } } \quad \text { for } j = 1 , \ldots , K</script><p>可以看出，针对一个高维向量，即使要计算softmax后的一个元素值，也需要针对所有元素做指数运算，当维度非常高时，这种计算无疑是非常费时的。在word2vec中，需要做softmax运算的向量维度为词表词语个数，当语料库非常大时，词表词语个数也会变得非常大。但我们关注的只是某一个词的概率，即计算softmax后的某一个元素值，这里肯定存在许多无用计算。</p>
+<h5 id="3-1-Hierarchical-softmax"><a href="#3-1-Hierarchical-softmax" class="headerlink" title="3.1 Hierarchical softmax"></a>3.1 Hierarchical softmax</h5><p>分层softmax的出发点是，将词表中的所有词语组织成一棵哈夫曼树，计算词语出现概率时，使用从根节点到词语所在叶节点路径上的向量进行运算。这种方法不仅降低了softmax层的运算，还减少了输出层的计算量。</p>
+<p>具体来说，先将词表中的词语组织到哈夫曼树的叶节点上。什么是哈夫曼树以及如何构建网上有很多资料，这里不再赘述了。简单来说，这里使用的哈夫曼树就是一棵二叉树，每个非叶节点存放一个向量（可以理解成神经网络中的参数，需要在训练过程中更新），每个叶节点存放一个词语，词语的词频越高，该叶节点离根节点越近。</p>
+<p>还是以「知识 改变 命运」为例，使用「知识」预测「改变」，假定语料库中的词频知识&gt;改变&gt;命运，则模型简单结构和构建的哈夫曼树如下图：</p>
+<p><img src="/2019/02/25/BERT3/image-20190225163936583.png" alt="image-20190225163936583"></p>
+<center>图四</center>
+
+<p>前面的步骤都一样，取知识的词向量 $w_1$，然后让我们随着词向量的脚步进入哈夫曼树，来看看如何得到P(改变|知识)：</p>
+<p>首先，$w_1$ 来到了根节点，碰到了向量$w^{‘}_0$ , 两个向量迫不及待地做了一次内积运算，得到一个值：$w_1w^{‘}_0$ 。接下来就面临道路的选择，走左边还是走右边？我们可以将这个问题看作一个二分类问题，规定走左子树为负类，右子树为正类，使用sigmoid函数来解决这个问题（类似于逻辑斯蒂回归）：</p>
+<script type="math/tex; mode=display">\sigma \left(w_1w^{'}_0 \right) = \frac { 1 } { 1 + e ^ { - w_1w^{'}_0 } }</script><p>因此，被分为正类的概率为$\sigma \left(w_1w^{‘}_0 \right)$ ，负类的概率为 $1-\sigma \left(w_1w^{‘}_0 \right)$ 。</p>
+<p>要决定选择哪条路，得看我们的目标。这里的目标是抵达「改变」所在的叶节点，该叶节点在左子树上，因此需要走左边。到达左子树的「根节点」后，与前面一样，$w_1$ 又和该节点上的向量做了一次内积运算，不同的是，这次需要走右边来找到「改变」。因此：</p>
+<script type="math/tex; mode=display">P(改变|知识) = (1-\sigma \left(w_1w^{'}_0 \right)) * \sigma \left(w_1w^{'}_1 \right)</script><p>有了目标函数，接下来根据链式求导法则就可以求出参数更新公式了。后续的具体推导可以参考资料【2】。</p>
+<h5 id="3-2-Negative-Sampling"><a href="#3-2-Negative-Sampling" class="headerlink" title="3.2 Negative Sampling"></a>3.2 Negative Sampling</h5><p>Negative Sampling（NEG）使用简单的随机负采样来代替复杂的哈夫曼树，大幅提高性能，可以作为Hierarchical softmax的一种替代方法。</p>
+<p>同样以「知识 改变 命运」为例，使用「知识」预测「改变」，那么「改变」这个词就是一个<strong>「正样本」</strong>， 其他的所有词为<strong>「负样本」</strong>， 假设我们采集到的负样本集合为{命运}，那么我们需要最大化：</p>
+<script type="math/tex; mode=display">P= P(改变|知识)*(1-P(命运|知识)) =  \sigma \left(w_1w^{'}_2 \right) * (1-\sigma \left(w_1w^{'}_3 \right))</script><p>其中$w^{‘}_2和w^{‘}_3$分别为「改变」和「知识」的输出词向量（即$W^{‘}$的第三列和第四列列向量）。</p>
+<p>乘号前面表示预测为正样本的概率，后面表示预测不是负样本的概率。因此，最大化P可以理解为，增大预测正样本的概率同时降低预测负样本的概率。</p>
+<p>另外，负样本的采集为随机采集，同样，这里的随机也并不是等概率随机，而是根据各个词语所占的词频比例进行相应概率的采样。</p>
+<h5 id="3-3-比较"><a href="#3-3-比较" class="headerlink" title="3.3 比较"></a>3.3 比较</h5><p>由于Hierarchical Softmax使用了哈夫曼树，非叶节点的数量并不等于词语的数量，因此也没有了「输出词向量」这个概念，可能会损失一些效果（如Glove中，最后效果最好的词向量为输入词向量和输出词向量的平均）。</p>
+<p>根据word2vec官网，两者的比较如下：</p>
+<blockquote>
+<p>hierarchical softmax : better for infrequent words</p>
+<p>negative sampling : better for frequent words, better with low dimensional vectors</p>
+</blockquote>
+<h4 id="4-几点思考与理解"><a href="#4-几点思考与理解" class="headerlink" title="4. 几点思考与理解"></a>4. 几点思考与理解</h4><h5 id="4-1-对语义建模的理解"><a href="#4-1-对语义建模的理解" class="headerlink" title="4.1 对语义建模的理解"></a>4.1 对语义建模的理解</h5><p>Word2Vec主要是通过词语与其上下文之间的关系来对语义进行建模的。出发点就是拥有相同上下文的词语语义更加相似，体现到词向量上，就是拥有相同上下文的词语的词向量距离更近。如“苹果是一种水果”，“香蕉是一种水果”，苹果和香蕉拥有相同的上下文词语，那么我们认为苹果和香蕉的语义是相似的，它们的词向量的距离也应该是更近的。那么Word2Vec是怎么做到的呢？</p>
+<p>要理解这一点，我们需要来简单地看一下反向传播的过程。针对图一：</p>
+<p>计算softmax后的向量各元素值为：</p>
+<script type="math/tex; mode=display">y _ { i } = \frac { \exp \left( u _ { i } \right) } { \sum _ { j = 1 } ^ { 4 } \exp \left( u _ { j } \right) }</script><p>损失函数为：</p>
+<script type="math/tex; mode=display">E = - \log y _ { 2 } = \log \sum _ { j = 1 } ^ { 4 } \exp \left( u _ { j } \right) - u _ { 2 }</script><p>损失函数对输出层的梯度为：</p>
+<script type="math/tex; mode=display">\frac { \partial E } { \partial u _ { j } } = \left\{ \begin{array} { l } { y _ { j } , \quad j ! = 2 } \\ { y _ { j } - 1 , j = 2 } \end{array} \right. = e _ { j }</script><p>损失函数对「知识」这个词的词向量的梯度为：</p>
+<script type="math/tex; mode=display">\frac { \partial E } { \partial w _ { 1 } } = \sum _ { j = 1 } ^ { 4 } \frac { \partial E } { \partial \mathrm { u } _ { j } } \frac { \partial u _ { j } } { \partial w _ { 1 } } = \sum _ { j = 1 } ^ { 4 } e _ { j } \cdot w _ { j } ^ { \prime }</script><p>「知识」这个词的词向量的更新公式为：</p>
+<script type="math/tex; mode=display">w _ { 1 } ^ { ( n e w ) } = w _ { 1 } ^ { ( o l d ) } - \eta \cdot \{ \begin{array} { l } { e _ { 0 } \cdot w _ { 0 } ^ { \prime } } \\ { e _ { 1 } \cdot w _ { 1 } ^ { \prime } } \\ { e _ { 2 } \cdot w _ { 2 } ^ { \prime } }  \\{ e _ { 3 } \cdot w _ { 3 } ^ { \prime } } \end{array}</script><p>以上，我们就推出了原始形式下，word2vec的词向量更新公式。让我们以图形的形式来理解一下这个更新公式：</p>
+<p><img src="/2019/02/25/BERT3/image-20190225194912817.png" alt="image-20190225194912817"></p>
+<center>图五</center>
+
+<p>由于只有$e_2$是负数，因此，$w_1$加上了$w^{‘}_2$的分量，从空间上看，两者相互靠近了！</p>
+<blockquote>
+<p>即： $w<em>{知识}$ 靠近了 $w^{‘}</em>{改变}$ ；其余词语的词向量则远离了 $w^{‘}_{改变}$ 。</p>
+</blockquote>
+<p>同理，对于样本「高考 改变 命运」，当我们使用「高考」去预测「改变」时，我们也会发现， $w<em>{高考}$ 向 $w^{‘}</em>{改变}$ 靠近。这样以来， $w_{知识}$ 和 $w{高考}$ 也在互相靠近！</p>
+<p>因此，使用word2vec训练词向量，其过程就是<strong>相同上下文的词语的词向量相互靠近，不同上下文的词语的词向量相互远离的过程</strong>。对于类似上下文的词语，其词向量在空间上更加靠近，向量之间的距离也更短。</p>
+<h5 id="4-2-对词向量维度的理解"><a href="#4-2-对词向量维度的理解" class="headerlink" title="4.2 对词向量维度的理解"></a>4.2 对词向量维度的理解</h5><p>有了前面的理解，再来看一下词向量的维度。图五中，我们画出了二维向量相互靠近的过程，在二维空间，如果我们想要靠近一个向量，势必也要远离另外一些向量。但如果我们的相似词语比较多时，势必无法靠近所有相似词语的向量。而维度越高，越可以在保持与当前相似向量距离变化不大的情况下，靠近另外一个相似向量。</p>
+<p>因此，词向量的维度越高，一个词语能够与越多的词语产生正确的「靠近运动」，表现在语言层面，可以理解为具有更加丰富的语义。一般，训练词向量使用的语料库越大，就应该使用越大的词向量维度，这样也能够得到具备更加丰富语义的词向量。</p>
+<p>但词向量的维度并非越高越好，维度越高，词向量所占的存储空间越大，顶层任务所需要的计算量越大。因此，实际使用中，可以根据具体语料库的大小和实际计算要求选择。</p>
+<h4 id="5-不足与改进空间"><a href="#5-不足与改进空间" class="headerlink" title="5. 不足与改进空间"></a>5. 不足与改进空间</h4><p>总的来说，word2vec通过词语与上下文的相互关系来将语义建模到向量中，但word2vec没有考虑词语之间的顺序关系，也没有考虑整个语料库的统计信息（word2vec属于基于预测的词嵌入方法），通过上下文关系建模语义的过程，也会损失许多语义和句法等信息。这就给后续的研究留下了许多可开展的空间……</p>
+<h4 id="6-参考资料推荐"><a href="#6-参考资料推荐" class="headerlink" title="6. 参考资料推荐"></a>6. 参考资料推荐</h4><p>我在学习word2vec的过程中，阅读了非常多的资料，有些对理解Word2Vec帮助巨大，下面我将个人觉得最好的资料推荐出来（百度一下或google一下都能搜到）：</p>
+<p>【1】word2vec Parameter Learning Explained.  Xin Rong ronxin@umich.edu </p>
+<p>这篇论文强烈推荐！论文对Word2Vec的四个主要概念进行了非常详细的介绍，也有一些Intutive的解释帮助理解！首推！</p>
+<p>【2】Word2Vec中的数学原理详解</p>
+<p>强烈推荐！文章介绍Word2Vec的由来和前置知识，最难得的是，文章对四个主要概念都进行了前向传播和反向传播的推导，认真啃下来，对理解Word2Vec帮助巨大！</p>
+<p>【3】[NLP] 秒懂词向量Word2vec的本质</p>
+<p>我接触Word2Vec前期看的文章，帮助我建立了对Word2Vec的初步认识，理解了Word2Vec到底为何方神圣；文中推荐的许多资料也让我在后续的学习过程中受益匪浅！</p>
+<p>【4】<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/tutorials/word2vec/word2vec_basic.py" target="_blank" rel="noopener">https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/tutorials/word2vec/word2vec_basic.py</a></p>
+<p>tensorflow官方的word2vec基础代码实现，对于理解word2vec的样本构造，训练细节等大有帮助。</p>
 
       
     </div>
@@ -482,7 +618,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/求职/" rel="tag"># 求职</a>
+            <a href="/tags/BERT-NLP/" rel="tag"># BERT NLP</a>
           
         </div>
       
@@ -495,8 +631,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/17/服务器配置指南/" rel="next" title="深度学习服务器完整配置指南">
-                <i class="fa fa-chevron-left"></i> 深度学习服务器完整配置指南
+              <a href="/2019/01/22/BERT2/" rel="next" title="BERT发展史（二）语言模型">
+                <i class="fa fa-chevron-left"></i> BERT发展史（二）语言模型
               </a>
             
           </div>
@@ -504,10 +640,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/18/BERT1/" rel="prev" title="BERT发展史（一）从词嵌入讲起">
-                BERT发展史（一）从词嵌入讲起 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -647,7 +779,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-写在前面"><span class="nav-number">1.</span> <span class="nav-text">0.写在前面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-春招"><span class="nav-number">2.</span> <span class="nav-text">1. 春招</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-时间节点"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 时间节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-信息渠道"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 信息渠道</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-关于内推"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 关于内推</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-关于暑期实习offer选择"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 关于暑期实习offer选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-实习和秋招"><span class="nav-number">3.</span> <span class="nav-text">2. 实习和秋招</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-暑期实习"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 暑期实习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-时间节点"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 时间节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-信息渠道和内推"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 信息渠道和内推</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-薪资谈判"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 薪资谈判</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-offer选择"><span class="nav-number">3.5.</span> <span class="nav-text">2.5 offer选择</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#0-写在前面"><span class="nav-number">1.</span> <span class="nav-text">0. 写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Word2Vec概览"><span class="nav-number">2.</span> <span class="nav-text">1. Word2Vec概览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-CBOW-amp-Skip-gram"><span class="nav-number">3.</span> <span class="nav-text">2. CBOW &amp; Skip-gram</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-CBOW"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 CBOW</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-Skip-gram"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 Skip-gram</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-比较"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 比较</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Trick"><span class="nav-number">4.</span> <span class="nav-text">3. Trick</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-Hierarchical-softmax"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 Hierarchical softmax</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-Negative-Sampling"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 Negative Sampling</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-比较"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 比较</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-几点思考与理解"><span class="nav-number">5.</span> <span class="nav-text">4. 几点思考与理解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-对语义建模的理解"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 对语义建模的理解</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-对词向量维度的理解"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 对词向量维度的理解</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-不足与改进空间"><span class="nav-number">6.</span> <span class="nav-text">5. 不足与改进空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-参考资料推荐"><span class="nav-number">7.</span> <span class="nav-text">6. 参考资料推荐</span></a></li></ol></div>
             
 
           </div>
